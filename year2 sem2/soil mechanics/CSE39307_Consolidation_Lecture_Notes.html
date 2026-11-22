@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSE39307 土壤力学 - 固结讲义</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', Arial, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-left: 5px solid #667eea;
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .section {
+            background: #f9f9f9;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .learning-objectives {
+            background: #e3f2fd;
+            padding: 20px;
+            border-left: 4px solid #2196f3;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+
+        .learning-objectives h3 {
+            color: #1976d2;
+            margin-top: 0;
+        }
+
+        .learning-objectives ul {
+            margin-left: 20px;
+        }
+
+        .learning-objectives li {
+            margin: 8px 0;
+            color: #0d47a1;
+        }
+
+        .key-concept {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .key-concept strong {
+            color: #856404;
+        }
+
+        .example {
+            background: #f0f7ff;
+            border-left: 4px solid #0066cc;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .example h4 {
+            color: #0066cc;
+            margin-bottom: 10px;
+        }
+
+        .example-solution {
+            background: #e6f3ff;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+        }
+
+        .formula {
+            background: #f5f5f5;
+            border: 2px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            text-align: center;
+            font-style: italic;
+            color: #333;
+            overflow-x: auto;
+        }
+
+        .formula-box {
+            background: #e8eaf6;
+            border: 2px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        tr:hover {
+            background: #f0f0f0;
+        }
+
+        .important {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+
+        .definition {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .definition-title {
+            color: #6a1b9a;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin: 15px 0;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        .note {
+            background: #fffde7;
+            border-left: 4px solid #ffeb3b;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .note::before {
+            content: "📝 ";
+        }
+
+        .diagram {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border-radius: 4px;
+        }
+
+        .step {
+            background: #f0f0f0;
+            padding: 12px;
+            margin: 10px 0;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+
+        .step-num {
+            font-weight: bold;
+            color: #667eea;
+            display: inline-block;
+            background: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            margin-right: 8px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #666;
+        }
+
+        .toc {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .toc h3 {
+            margin-top: 0;
+        }
+
+        .toc ol {
+            margin-left: 30px;
+        }
+
+        .toc li {
+            margin: 5px 0;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .page-break {
+            page-break-after: always;
+            margin: 40px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 CSE39307 土壤力学</h1>
+            <p class="subtitle">第三章：固结 (Consolidation) 详细讲义</p>
+            <p>香港理工大学 土木工程学系</p>
+        </header>
+
+        <div class="toc">
+            <h3>📑 目录</h3>
+            <ol>
+                <li>课程目标与引言</li>
+                <li>香港地面改造工程案例</li>
+                <li>俄德美测试 (Oedometer Test)</li>
+                <li>压缩性特征 (Compressibility Characteristics)</li>
+                <li>固结沉降 (Consolidation Settlements)</li>
+                <li>一维固结理论 (1D Consolidation Theory)</li>
+                <li>固结度随时间变化 (Degree of Consolidation vs Time)</li>
+                <li>竖向排水管 (Vertical Drains)</li>
+                <li>复习要点与考试准备</li>
+            </ol>
+        </div>
+
+        <!-- 第一部分：课程目标 -->
+        <h2>第一部分：课程目标与引言</h2>
+
+        <div class="learning-objectives">
+            <h3>🎯 本章学习目标</h3>
+            <ul>
+                <li>估算固结沉降的数量 (Amount of Consolidation Settlement)</li>
+                <li>使用Terzaghi一维固结理论估算固结度随时间的变化</li>
+                <li>理解竖向排水管在加速固结过程中的作用</li>
+            </ul>
+        </div>
+
+        <div class="key-concept">
+            <strong>🔑 为什么要学习固结？</strong>
+            <p>当对软土 (clayey soil) 施加荷载时，土壤需要时间进行压缩和沉降。这个过程叫做"固结"。工程师需要能够：</p>
+            <ul style="margin-left: 20px;">
+                <li>预测建筑最终会沉降多少</li>
+                <li>预测沉降需要多长时间</li>
+                <li>采取措施加速或控制沉降</li>
+            </ul>
+        </div>
+
+        <!-- 第二部分：香港案例 -->
+        <h2>第二部分：香港地面改造工程与固结问题</h2>
+
+        <div class="section">
+            <h3>💡 实际工程背景</h3>
+            <p>香港进行了大规模的地面改造工程 (reclamation projects)，特别是在马湾 (Ma Wan) 和其他地区。这些项目涉及在淤泥坑 (mud pits) 上方进行建筑，产生了显著的固结沉降。</p>
+
+            <div class="key-concept">
+                <strong>关键观察：</strong>
+                <ul>
+                    <li>马湾改造项目：在1993年完成，观测到沉降 (settlement)</li>
+                    <li>沉降量可达 250-300mm，这是非常显著的</li>
+                    <li>这些沉降是由于黏土层的固结引起的</li>
+                    <li>工程师必须预测这些沉降并采取措施</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 第三部分：俄德美测试 -->
+        <h2>第三部分：俄德美测试 (Oedometer Test)</h2>
+
+        <h3>3.1 什么是俄德美测试？</h3>
+
+        <div class="definition">
+            <div class="definition-title">定义：俄德美测试 (Oedometer Test)</div>
+            <p>俄德美测试是在实验室中使用特殊仪器来获取黏土在一维固结或膨胀过程中的特性。这是获得土壤压缩特征的常见方法。</p>
+        </div>
+
+        <div class="section">
+            <h3>3.2 测试仪器与程序</h3>
+            <p>俄德美测试装置包括：</p>
+            <ul>
+                <li><strong>试样 (Specimen)：</strong> 饱和黏土样品，直径约63.5mm，厚度约20mm</li>
+                <li><strong>约束环 (Confining Ring)：</strong> 防止土样侧向膨胀，强制为一维压缩</li>
+                <li><strong>多孔石 (Porous Stones)：</strong> 位于试样的上下两端，允许水通过</li>
+                <li><strong>荷载架 (Loading Frame)：</strong> 施加竖向荷载</li>
+                <li><strong>刻度盘 (Dial Gauge)：</strong> 测量竖向位移</li>
+            </ul>
+        </div>
+
+        <h3>3.3 相位关系 (Phase Diagram)</h3>
+
+        <div class="key-concept">
+            <strong>重要回顾：</strong>
+            <p>回忆第一章中的相位关系。对于饱和黏土 (saturated clay soil)，S = 1：</p>
+            <ul style="margin-left: 20px;">
+                <li>固体体积：V<sub>s</sub> = 1</li>
+                <li>孔隙体积：V<sub>v</sub> = e（孔隙比）</li>
+                <li>水体积：V<sub>w</sub> = e</li>
+            </ul>
+        </div>
+
+        <div class="formula-box">
+            <strong>关键关系式：</strong>
+            <p>当土样高度从 H<sub>0</sub> 变化到 H<sub>1</sub> 时：</p>
+            <p>Δe/(ΔH) = (1 + e₀)/H₀</p>
+        </div>
+
+        <div class="note">
+            这个关系说明：高度的变化与孔隙比的变化成正比。这是后续所有计算的基础。
+        </div>
+
+        <!-- 第四部分：压缩性特征 -->
+        <h2>第四部分：压缩性特征 (Compressibility Characteristics)</h2>
+
+        <h3>4.1 e - σ' 图与 e - log σ' 图</h3>
+
+        <div class="section">
+            <p>黏土的压缩性通常用两种不同的图表表示：</p>
+
+            <h4>类型1：e - σ' 图（线性关系）</h4>
+            <ul>
+                <li>横轴：有效应力 σ'（单位：kPa）</li>
+                <li>纵轴：孔隙比 e（无量纲）</li>
+                <li>特点：对于超固结土，曲线斜率与压缩系数 m<sub>v</sub> 成正比</li>
+            </ul>
+
+            <h4>类型2：e - log σ' 图（对数关系）</h4>
+            <ul>
+                <li>更常用的表示方法</li>
+                <li>显示两条明显的段：处女压缩 (Virgin Compression) 和卸载-重新加载 (Unload-Reload)</li>
+                <li>两条曲线由前固结应力 σ'<sub>c</sub> 分开</li>
+            </ul>
+        </div>
+
+        <h3>4.2 关键参数</h3>
+
+        <div class="definition">
+            <div class="definition-title">1. 体积压缩系数 m<sub>v</sub> (Coefficient of Volume Compressibility)</div>
+            <p>定义：</p>
+            <div class="formula">m<sub>v</sub> = (1/V) × (dV/dσ')</div>
+            <p>单位：m²/MN 或 m²/kN</p>
+            <p>对于一维情况：</p>
+            <div class="formula">m<sub>v</sub> = (1/H₀) × [(H₀ - H₁)/(σ'₁ - σ'₀)]</div>
+            <p>或等价地：</p>
+            <div class="formula">m<sub>v</sub> = (1/(1+e₀)) × [(e₀ - e₁)/(σ'₁ - σ'₀)]</div>
+        </div>
+
+        <div class="key-concept">
+            <strong>重要！</strong>
+            <p>m<sub>v</sub> <span class="important">不是常数</span>，它随应力而变化（应力相关）。这在设计计算中很重要。</p>
+        </div>
+
+        <div class="definition">
+            <div class="definition-title">2. 压缩指数 C<sub>c</sub> (Compression Index)</div>
+            <p>在 e - log σ' 图上，处女压缩曲线的斜率：</p>
+            <div class="formula">C<sub>c</sub> = -(e₁ - e₀)/log₁₀(σ'₁/σ'₀)</div>
+        </div>
+
+        <div class="definition">
+            <div class="definition-title">3. 膨胀指数 C<sub>e</sub> (Expansion Index)</div>
+            <p>卸载-重新加载曲线的斜率：</p>
+            <div class="formula">C<sub>e</sub> = -(e₁ - e₀)/log₁₀(σ'₁/σ'₀)</div>
+            <p>通常 C<sub>e</sub> ≈ 0.2-0.3 × C<sub>c</sub></p>
+        </div>
+
+        <h3>4.3 过固结比 (OCR)</h3>
+
+        <div class="definition">
+            <div class="definition-title">定义：过固结比 (Overconsolidation Ratio)</div>
+            <div class="formula">OCR = σ'<sub>v,max</sub> / σ'<sub>v0</sub></div>
+            <p>这代表土壤过去经历的最大有效应力与现在应力的比例。</p>
+        </div>
+
+        <div class="section">
+            <h4>OCR 的含义：</h4>
+            <ul>
+                <li><strong>OCR = 1：</strong> 正常固结土 (Normally Consolidated)，土壤从未经受比现在更大的应力</li>
+                <li><strong>OCR > 1：</strong> 超固结土 (Overconsolidated)，土壤过去曾经受过更大的应力（可能由于侵蚀）</li>
+            </ul>
+        </div>
+
+        <!-- 第五部分：固结沉降 -->
+        <h2>第五部分：固结沉降计算 (Consolidation Settlement)</h2>
+
+        <h3>5.1 沉降的两种表示方法</h3>
+
+        <div class="section">
+            <h4>方法1：使用 m<sub>v</sub></h4>
+            <div class="formula-box">
+                <strong>对于正常固结土 (OCR = 1)：</strong>
+                <p>s<sub>c</sub> = (H/(1+e₀)) × (Δe) = (H/(1+e₀)) × m<sub>v</sub> × log(σ'₀ + Δσ')/σ'₀)</p>
+                <p style="margin-top: 10px;">其中：</p>
+                <ul style="text-align: left; margin-left: 20px;">
+                    <li>H = 层厚度</li>
+                    <li>e₀ = 初始孔隙比</li>
+                    <li>m<sub>v</sub> = 体积压缩系数</li>
+                    <li>σ'₀ = 初始有效应力</li>
+                    <li>Δσ' = 应力增加</li>
+                </ul>
+            </div>
+
+            <h4>方法2：使用 C<sub>c</sub> 和 C<sub>e</sub></h4>
+            <div class="key-concept">
+                <strong>对于正常固结土：</strong>
+                <div class="formula">s<sub>c</sub> = (H/(1+e₀)) × C<sub>c</sub> × log[(σ'₀ + Δσ')/σ'₀]</div>
+            </div>
+
+            <div class="key-concept">
+                <strong>对于超固结土，σ'₀ + Δσ' < σ'<sub>c</sub>：</strong>
+                <div class="formula">s<sub>c</sub> = (H/(1+e₀)) × C<sub>e</sub> × log[(σ'₀ + Δσ')/σ'₀]</div>
+            </div>
+
+            <div class="key-concept">
+                <strong>对于超固结土，σ'₀ + Δσ' > σ'<sub>c</sub>：</strong>
+                <div class="formula">s<sub>c</sub> = (H/(1+e₀)) × {C<sub>e</sub> × log[σ'<sub>c</sub>/σ'₀] + C<sub>c</sub> × log[(σ'₀ + Δσ')/σ'<sub>c</sub>]}</div>
+            </div>
+        </div>
+
+        <!-- 例题1 -->
+        <div class="example">
+            <h4>例题1：使用m<sub>v</sub>计算固结沉降</h4>
+            <p><strong>问题：</strong> 一条30米宽的堤坝要建在分层地面上。堤坝施加的竖向应力为90 kPa（均匀分布）。上层黏土的m<sub>v</sub> = 0.35 m²/MN，下层黏土的m<sub>v</sub> = 0.13 m²/MN。确定堤坝中心处由于固结引起的最终沉降。假设两个黏土层的Δσ<sub>v</sub> = 90kPa。</p>
+
+            <div class="example-solution">
+                <h4>解答步骤：</h4>
+
+                <div class="step">
+                    <span class="step-num">步骤1</span>
+                    对每一层单独计算沉降。使用公式：
+                    <div class="formula">s<sub>c</sub> = H × m<sub>v</sub> × Δσ'</div>
+                </div>
+
+                <div class="step">
+                    <span class="step-num">步骤2</span>
+                    上层黏土：
+                    <ul>
+                        <li>H = 10.5 m</li>
+                        <li>m<sub>v</sub> = 0.35 m²/MN = 0.35 × 10⁻³ m²/kN</li>
+                        <li>Δσ<sub>v</sub> = 90 kPa</li>
+                        <li>s₁ = 10.5 × 0.35 × 10⁻³ × 90 = 0.331 m = 331 mm</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <span class="step-num">步骤3</span>
+                    下层黏土：
+                    <ul>
+                        <li>H = 13.5 m</li>
+                        <li>m<sub>v</sub> = 0.13 m²/MN = 0.13 × 10⁻³ m²/kN</li>
+                        <li>Δσ<sub>v</sub> = 90 kPa</li>
+                        <li>s₂ = 13.5 × 0.13 × 10⁻³ × 90 = 0.158 m = 158 mm</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <span class="step-num">步骤4</span>
+                    总沉降：
+                    <div class="formula">s<sub>c,总</sub> = s₁ + s₂ = 331 + 158 = 489 mm ≈ 49 cm</div>
+                </div>
+
+                <h4>答案：最终沉降约为 49 cm</h4>
+            </div>
+        </div>
+
+        <!-- 例题2 -->
+        <div class="example">
+            <h4>例题2：使用C<sub>c</sub>和C<sub>e</sub>计算固结沉降</h4>
+            <p><strong>问题：</strong> 一个8米厚的砂层覆盖一个6米厚的黏土层。水位距砂层表面2米。每年要放置3米厚的填土（单位重20 kN/m³）。砂层的饱和单位重为19 kN/m³，黏土的单位重为20 kN/m³。黏土的孔隙比与有效应力的关系为：e = 0.88 - 0.32 × log(σ'/100)。计算由于黏土固结引起的最终沉降。</p>
+
+            <div class="example-solution">
+                <h4>解答步骤：</h4>
+
+                <div class="step">
+                    <span class="step-num">步骤1</span>
+                    确定初始应力条件。黏土层中点深度为2 + 8 + 3 = 13米。
+                    <ul>
+                        <li>水位以上的有效应力：(2 m) × (17 kN/m³) = 34 kPa</li>
+                        <li>砂层内的有效应力：(8 m) × (19-9.8) kN/m³ = 73.6 kPa</li>
+                        <li>黏土上部分的有效应力：(3 m) × (20-9.8) kN/m³ = 30.6 kPa</li>
+                        <li>初始σ'₀ = 34 + 73.6 + 30.6 = 138.2 kPa</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <span class="step-num">步骤2</span>
+                    确定初始孔隙比：
+                    <div class="formula">e₀ = 0.88 - 0.32 × log(138.2/100) = 0.88 - 0.32 × 0.141 = 0.835</div>
+                </div>
+
+                <div class="step">
+                    <span class="step-num">步骤3</span>
+                    确定最终应力。填土施加额外应力：
+                    <ul>
+                        <li>水位以下填土的有效应力：(3 m) × (20-9.8) = 30.6 kPa</li>
+                        <li>σ'₁ = 138.2 + 30.6 = 168.8 kPa</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <span class="step-num">步骤4</span>
+                    计算最终孔隙比：
+                    <div class="formula">e₁ = 0.88 - 0.32 × log(168.8/100) = 0.88 - 0.32 × 0.227 = 0.807</div>
+                </div>
+
+                <div class="step">
+                    <span class="step-num">步骤5</span>
+                    计算沉降：
+                    <div class="formula">s<sub>c</sub> = (H/(1+e₀)) × (e₀ - e₁)</div>
+                    <div class="formula">s<sub>c</sub> = (6/(1+0.835)) × (0.835 - 0.807) = (6/1.835) × 0.028 = 0.092 m = 92 mm</div>
+                </div>
+
+                <h4>答案：最终沉降约为 92 mm 或 9.2 cm</h4>
+            </div>
+        </div>
+
+        <!-- 第六部分：固结度与时间 -->
+        <h2>第六部分：一维固结理论 (1D Consolidation Theory)</h2>
+
+        <h3>6.1 Terzaghi的一维固结理论假设</h3>
+
+        <div class="section">
+            <p>Terzaghi在1943年提出了一维固结理论。该理论基于以下重要假设：</p>
+            <ul>
+                <li>土壤是<strong>均匀的</strong> (homogeneous)</li>
+                <li>土壤是<strong>完全饱和的</strong> (fully saturated)</li>
+                <li>固体颗粒和水是<strong>不可压缩的</strong> (incompressible)</li>
+                <li>压缩和流动是<strong>一维的</strong>（竖向）</li>
+                <li>应变很小 (small strain)</li>
+                <li><strong>Darcy定律</strong>在所有液压梯度下适用</li>
+                <li>渗透性保持常数 (constant permeability)</li>
+                <li>孔隙比与有效应力有唯一关系</li>
+            </ul>
+        </div>
+
+        <h3>6.2 固结度 (Degree of Consolidation)</h3>
+
+        <div class="definition">
+            <div class="definition-title">定义：固结度 U (Degree of Consolidation)</div>
+            <p>固结度表示固结过程的进展，定义为：</p>
+            <div class="formula">U = (e₀ - e) / (e₀ - e₁)</div>
+            <p>或等价地：</p>
+            <div class="formula">U = (σ' - σ'₀) / (σ'₁ - σ'₀) = 1 - u<sub>e</sub>/u<sub>i</sub></div>
+        </div>
+
+        <div class="key-concept">
+            <strong>固结度的物理意义：</strong>
+            <ul style="margin-left: 20px;">
+                <li>U = 0：固结刚开始，孔隙水压力完全承载应力</li>
+                <li>U = 0.5：50%的固结，一半的应力已转移到土壤骨架</li>
+                <li>U = 1.0：完全固结，所有应力都由土壤骨架承载</li>
+            </ul>
+        </div>
+
+        <h3>6.3 平均固结度</h3>
+
+        <div class="section">
+            <p>在实际层状土壤中，固结度随深度变化。我们需要定义平均固结度：</p>
+            <div class="formula">U = 1 - ∫₀²ᵈ u<sub>e</sub>(t)dz / ∫₀²ᵈ u<sub>i</sub>(t=0)dz</div>
+            <p>其中 d 是最大流动距离，2d 是完整的固结深度。</p>
+        </div>
+
+        <h3>6.4 固结的时间因子 (Time Factor)</h3>
+
+        <div class="definition">
+            <div class="definition-title">定义：时间因子 T<sub>v</sub> (Time Factor)</div>
+            <div class="formula">T<sub>v</sub> = c<sub>v</sub> × t / d²</div>
+            <p>其中：</p>
+            <ul style="margin-left: 20px;">
+                <li>c<sub>v</sub> = 固结系数 (m²/year or m²/s)</li>
+                <li>t = 时间</li>
+                <li>d = 最大流动距离 (m)</li>
+            </ul>
+        </div>
+
+        <div class="note">
+            时间因子是<strong>无量纲</strong>的，这意味着具有相同T<sub>v</sub>的不同土壤会有相同的固结度U，无论其实际尺寸或时间如何。
+        </div>
+
+        <h3>6.5 精确解与近似解</h3>
+
+        <div class="section">
+            <h4>精确解：</h4>
+            <div class="formula-box">
+                <div class="formula">u<sub>e</sub> = Σ [2u<sub>i</sub>/M] × sin(Mz/d) × exp(-M² × T<sub>v</sub>)</div>
+                <p style="margin-top: 10px;">其中 M = π(2m+1)/2，m = 0, 1, 2, ...</p>
+            </div>
+
+            <div class="formula-box">
+                <div class="formula">U = 1 - Σ [2/M²] × exp(-M² × T<sub>v</sub>)</div>
+            </div>
+
+            <h4>近似解（重要！不需要记住确切形式）：</h4>
+            <div class="formula-box">
+                <p>对于 U < 0.6：</p>
+                <div class="formula">T<sub>v</sub> ≈ (π/4) × U²</div>
+
+                <p style="margin-top: 10px;">对于 U > 0.6：</p>
+                <div class="formula">T<sub>v</sub> ≈ -0.933 × log(1 - U) - 0.085</div>
+            </div>
+        </div>
+
+        <!-- 第七部分：固结度与时间的关系 -->
+        <h2>第七部分：固结度随时间的变化</h2>
+
+        <h3>7.1 U - T<sub>v</sub> 关系表</h3>
+
+        <div class="section">
+            <p>下表是根据Terzaghi理论计算的，显示固结度U与时间因子T<sub>v</sub>的关系：</p>
+
+            <table>
+                <tr>
+                    <th>固结度 U</th>
+                    <th>时间因子 T<sub>v</sub></th>
+                    <th>用途</th>
+                </tr>
+                <tr>
+                    <td>0.0</td>
+                    <td>0</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>0.1</td>
+                    <td>0.008</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>0.2</td>
+                    <td>0.031</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>0.3</td>
+                    <td>0.071</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>0.4</td>
+                    <td>0.126</td>
+                    <td>-</td>
+                </tr>
+                <tr style="background: #fff9c4;">
+                    <td><strong>0.5</strong></td>
+                    <td><strong>0.196</strong></td>
+                    <td><strong>log-time 方法</strong></td>
+                </tr>
+                <tr>
+                    <td>0.6</td>
+                    <td>0.287</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>0.7</td>
+                    <td>0.403</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>0.8</td>
+                    <td>0.567</td>
+                    <td>-</td>
+                </tr>
+                <tr style="background: #c8e6c9;">
+                    <td><strong>0.9</strong></td>
+                    <td><strong>0.848</strong></td>
+                    <td><strong>root-time 方法</strong></td>
+                </tr>
+                <tr>
+                    <td>1.0</td>
+                    <td>∞</td>
+                    <td>完全固结</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="key-concept">
+            <strong>关键观察：</strong>
+            <ul style="margin-left: 20px;">
+                <li>固结是<strong>非线性</strong>的：早期进展快，后期进展慢</li>
+                <li>达到50%固结需要T<sub>v</sub> = 0.196</li>
+                <li>达到90%固结需要T<sub>v</sub> = 0.848，约为50%的4.3倍</li>
+                <li>完全固结需要无限长时间</li>
+            </ul>
+        </div>
+
+        <h3>7.2 确定固结系数 c<sub>v</sub> 的两种方法</h3>
+
+        <h4>方法1：Root-Time 方法（Taylor）</h4>
+
+        <div class="section">
+            <div class="key-concept">
+                <strong>原理：</strong> 在T<sub>v</sub> < 0.3时，U与√T<sub>v</sub>呈线性关系。
+            </div>
+
+            <div class="formula-box">
+                <p>理论上，在√T处的U = 0.9时，完成点处于线性部分的1.15倍：</p>
+                <div class="formula">0.848 = c<sub>v</sub> × t₉₀ / d²</div>
+            </div>
+
+            <div class="note">
+                <strong>操作步骤：</strong>
+                <ol style="margin-left: 20px;">
+                    <li>从竖向压缩与√t的图上读取初始线性部分</li>
+                    <li>确定√t₉₀（对应于90%固结）</li>
+                    <li>使用公式：c<sub>v</sub> = (0.848 × d²) / t₉₀</li>
+                </ol>
+            </div>
+        </div>
+
+        <h4>方法2：Log-Time 方法（Casagrande）</h4>
+
+        <div class="section">
+            <div class="key-concept">
+                <strong>原理：</strong> 在对数时间轴上，初期有抛物形部分，后期有直线部分。
+            </div>
+
+            <div class="formula-box">
+                <div class="formula">0.196 = c<sub>v</sub> × t₅₀ / d²</div>
+            </div>
+
+            <div class="note">
+                <strong>操作步骤：</strong>
+                <ol style="margin-left: 20px;">
+                    <li>绘制竖向压缩与log(t)的曲线</li>
+                    <li>识别0%和100%固结的沉降值（a₀ 和 a₁₀₀）</li>
+                    <li>找到50%固结的沉降值：a₅₀ = (a₀ + a₁₀₀) / 2</li>
+                    <li>确定对应的时间 t₅₀</li>
+                    <li>计算：c<sub>v</sub> = (0.196 × d²) / t₅₀</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- 例题3 -->
+        <div class="example">
+            <h4>例题3：确定固结系数 c<sub>v</sub></h4>
+            <p><strong>问题：</strong> 在俄德美测试中，压力从214 kPa增加到429 kPa。获得以下沉降读数：</p>
+
+            <table style="font-size: 0.9em;">
+                <tr>
+                    <th>时间 (min)</th>
+                    <td>0</td>
+                    <td>0.25</td>
+                    <td>0.5</td>
+                    <td>1</td>
+                    <td>2.5</td>
+                    <td>4</td>
+                    <td>9</td>
+                    <td>16</td>
+                    <td>25</td>
+                    <td>36</td>
+                    <td>49</td>
+                    <td>64</td>
+                    <td>81</td>
+                    <td>100</td>
+                    <td>200</td>
+                    <td>400</td>
+                    <td>1440</td>
+                </tr>
+                <tr>
+                    <th>刻度盘 (mm)</th>
+                    <td>5.00</td>
+                    <td>4.67</td>
+                    <td>4.62</td>
+                    <td>4.53</td>
+                    <td>4.41</td>
+                    <td>4.28</td>
+                    <td>4.01</td>
+                    <td>3.75</td>
+                    <td>3.49</td>
+                    <td>3.28</td>
+                    <td>3.15</td>
+                    <td>3.06</td>
+                    <td>3.00</td>
+                    <td>2.96</td>
+                    <td>2.84</td>
+                    <td>2.76</td>
+                    <td>2.61</td>
+                </tr>
+            </table>
+
+            <p>测试后，试样厚度为13.60 mm，含水量为35.9%。从root-time和log-time方法确定c<sub>v</sub>。同时确定c<sub>c</sub>的值。</p>
+
+            <div class="example-solution">
+                <h4>解答步骤：</h4>
+
+                <div class="step">
+                    <span class="step-num">步骤1</span>
+                    计算初始和最终孔隙比：
+                    <ul>
+                        <li>初始孔隙比：e₀ = w × G<sub>s</sub> = 0.359 × 2.73 = 0.98</li>
+                        <li>最终孔隙比：e₁ = w₁ × G<sub>s</sub> = 0.359 × 2.73 = 0.98</li>
+                        <li>孔隙比变化：Δe = 0.35</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <span class="step-num">步骤2</span>
+                    计算最大流动距离 d：
+                    <ul>
+                        <li>总厚度变化：ΔH = 5.00 - 2.61 = 2.39 mm</li>
+                        <li>平均厚度：H = 13.60 + 2.39/2 = 14.80 mm</li>
+                        <li>最大流动距离：d = H/2 = 14.80/2 = 7.40 mm</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <span class="step-num">步骤3</span>
+                    使用Log-Time方法：
+                    <ul>
+                        <li>a₀ = 5.00 mm（初始沉降）</li>
+                        <li>a₁₀₀ = 2.61 mm（最终沉降）</li>
+                        <li>a₅₀ = (5.00 + 2.61)/2 = 3.805 mm</li>
+                        <li>从数据中找到最接近的值在t₅₀ ≈ 12.5 min</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <span class="step-num">步骤4</span>
+                    计算c<sub>v</sub>（Log-time）：
+                    <div class="formula">c<sub>v</sub> = (0.196 × d²) / t₅₀ = (0.196 × 7.40²) / 12.5 × (1440 × 365 / 10⁶)</div>
+                    <div class="formula">c<sub>v</sub> = 0.45 m²/year</div>
+                </div>
+
+                <div class="step">
+                    <span class="step-num">步骤5</span>
+                    使用Root-Time方法：
+                    <ul>
+                        <li>从√t图找到90%固结点</li>
+                        <li>√t₉₀ = 7.30，因此t₉₀ = 53.3 min</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <span class="step-num">步骤6</span>
+                    计算c<sub>v</sub>（Root-time）：
+                    <div class="formula">c<sub>v</sub> = (0.848 × d²) / t₉₀ = (0.848 × 7.40²) / 53.3 × (1440 × 365 / 10⁶)</div>
+                    <div class="formula">c<sub>v</sub> = 0.46 m²/year</div>
+                </div>
+
+                <h4>答案：c<sub>v</sub> ≈ 0.45-0.46 m²/year，两种方法给出相似结果</h4>
+            </div>
+        </div>
+
+        <!-- 第八部分：竖向排水管 -->
+        <h2>第八部分：竖向排水管 (Vertical Drains)</h2>
+
+        <h3>8.1 为什么使用竖向排水管？</h3>
+
+        <div class="section">
+            <div class="key-concept">
+                <strong>问题：</strong> 对于厚层软黏土，固结可能需要数年或数十年。这会造成：
+                <ul style="margin-left: 20px;">
+                    <li>建筑工程延误</li>
+                    <li>不均匀沉降风险</li>
+                    <li>长期维护问题</li>
+                </ul>
+            </div>
+
+            <div class="key-concept">
+                <strong>解决方案：竖向排水管加速固结</strong>
+                <ul style="margin-left: 20px;">
+                    <li><strong>缩短排水路径距离：</strong> 从d变为r（排水管间距）</li>
+                    <li><strong>增大横向渗透性：</strong> 大多数黏土的k<sub>h</sub> > k<sub>v</sub>（水平渗透率大于竖向）</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>8.2 排水管的类型与布置</h3>
+
+        <div class="section">
+            <h4>常见布置模式：</h4>
+            <ul>
+                <li><strong>正方形布置 (Square Pattern)：</strong> R = 0.5645 × S（S为间距）</li>
+                <li><strong>三角形布置 (Triangular Pattern)：</strong> R = 0.5255 × S</li>
+            </ul>
+
+            <p>其中R是等效排水半径，代表单个排水管影响范围的圆形等效半径。</p>
+        </div>
+
+        <h3>8.3 竖向排水管的设计理论</h3>
+
+        <div class="section">
+            <p>竖向排水管考虑了两个方向的流动：</p>
+
+            <div class="formula-box">
+                <strong>二维固结方程：</strong>
+                <div class="formula">∂u<sub>e</sub>/∂t = c<sub>h</sub>(∂²u<sub>e</sub>/∂r² + (1/r)∂u<sub>e</sub>/∂r) + c<sub>v</sub>∂²u<sub>e</sub>/∂z²</div>
+            </div>
+
+            <div class="key-concept">
+                <strong>关键参数：</strong>
+                <ul style="margin-left: 20px;">
+                    <li>T<sub>r</sub> = (c<sub>h</sub> × t) / (4R²) —— 径向时间因子</li>
+                    <li>T<sub>v</sub> = (c<sub>v</sub> × t) / d² —— 竖向时间因子</li>
+                    <li>U<sub>r</sub> = f(T<sub>r</sub>) —— 径向固结度</li>
+                    <li>U<sub>v</sub> = f(T<sub>v</sub>) —— 竖向固结度</li>
+                    <li>(1 - U) = (1 - U<sub>r</sub>) × (1 - U<sub>v</sub>) —— 总固结度</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>8.4 竖向排水管的效果</h3>
+
+        <div class="section">
+            <p>竖向排水管显著加快固结过程：</p>
+
+            <div class="key-concept">
+                <strong>示例：</strong> 如果没有排水管需要100年达到90%固结，安装排水管后可能只需要几个月或几年，取决于排水管间距和水平渗透率。
+            </div>
+        </div>
+
+        <!-- 第九部分：复习要点 -->
+        <h2>第九部分：复习要点与考试准备</h2>
+
+        <h3>9.1 核心概念检查清单</h3>
+
+        <div class="section" style="background: #e8f5e9;">
+            <h4>✓ 你应该能够：</h4>
+            <ul>
+                <li><strong>定义固结过程：</strong> 什么是固结？为什么会发生？</li>
+                <li><strong>解释俄德美测试：</strong> 设备、程序、单位</li>
+                <li><strong>计算压缩性参数：</strong> m<sub>v</sub>, C<sub>c</sub>, C<sub>e</sub>, OCR</li>
+                <li><strong>估算沉降：</strong> 使用m<sub>v</sub>或C<sub>c</sub>/C<sub>e</sub></li>
+                <li><strong>理解固结理论：</strong> Terzaghi的假设，适用性和局限性</li>
+                <li><strong>计算固结度：</strong> U与T<sub>v</sub>的关系</li>
+                <li><strong>确定c<sub>v</sub>：</strong> Root-time和log-time方法</li>
+                <li><strong>应用竖向排水管：</strong> 为什么、如何、何时使用</li>
+            </ul>
+        </div>
+
+        <h3>9.2 常见错误与陷阱</h3>
+
+        <div class="section" style="background: #ffebee;">
+            <h4>⚠️ 注意这些常见错误：</h4>
+            <ul>
+                <li><strong>单位混乱：</strong> 确保所有参数使用一致的单位（mm/kPa/年或m/kN/年）</li>
+                <li><strong>忘记1+e₀项：</strong> 计算沉降时必须包含(1+e₀)分母</li>
+                <li><strong>m<sub>v</sub>不是常数：</strong> 它随应力变化，需要从合适的应力范围获取</li>
+                <li><strong>混淆正常与超固结土：</strong> 使用不同的公式</li>
+                <li><strong>时间单位不匹配：</strong> T<sub>v</sub> = c<sub>v</sub>×t/d²中，t和c<sub>v</sub>必须有匹配的时间单位</li>
+                <li><strong>忽略分层：</strong> 对于分层土壤，每层单独计算然后求和</li>
+            </ul>
+        </div>
+
+        <h3>9.3 公式速查表</h3>
+
+        <div class="section">
+            <h4>固结沉降计算：</h4>
+            <div class="formula-box">
+                s<sub>c</sub> = (H/(1+e₀)) × m<sub>v</sub> × Δσ' OR
+                s<sub>c</sub> = (H/(1+e₀)) × C<sub>c</sub> × log[(σ'₀ + Δσ')/σ'₀]
+            </div>
+
+            <h4>压缩系数：</h4>
+            <div class="formula-box">
+                m<sub>v</sub> = (1/(1+e₀)) × [(e₀-e₁)/(σ'₁-σ'₀)]<br>
+                C<sub>c</sub> = -(e₁-e₀)/log₁₀(σ'₁/σ'₀)
+            </div>
+
+            <h4>固结度与时间：</h4>
+            <div class="formula-box">
+                U = (e₀ - e) / (e₀ - e₁)<br>
+                T<sub>v</sub> = c<sub>v</sub> × t / d²<br>
+                (1-U) = (1-U<sub>r</sub>) × (1-U<sub>v</sub>)（竖向排水管）
+            </div>
+
+            <h4>固结系数：</h4>
+            <div class="formula-box">
+                c<sub>v</sub> = (0.848 × d²) / t₉₀（Root-time）<br>
+                c<sub>v</sub> = (0.196 × d²) / t₅₀（Log-time）
+            </div>
+        </div>
+
+        <h3>9.4 典型考试题型</h3>
+
+        <div class="section">
+            <h4>类型1：从俄德美测试数据计算参数</h4>
+            <p><span class="important">预期步骤：</span> 读取数据 → 计算孔隙比 → 绘图 → 确定C<sub>c</sub>, C<sub>e</sub>, σ'<sub>c</sub> → 计算c<sub>v</sub></p>
+
+            <h4>类型2：估算建筑沉降</h4>
+            <p><span class="important">预期步骤：</span> 确定应力 → 确定初始条件 → 计算孔隙比变化 → 计算沉降 → 检查合理性</p>
+
+            <h4>类型3：确定固结需要的时间</h4>
+            <p><span class="important">预期步骤：</span> 确定目标固结度U → 从表中找T<sub>v</sub> → 已知d和c<sub>v</sub> → 计算时间t</p>
+
+            <h4>类型4：竖向排水管设计</h4>
+            <p><span class="important">预期步骤：</span> 确定布置和间距 → 计算R和T<sub>r</sub> → 计算径向和竖向固结度 → 确定所需间距以达到目标U</p>
+        </div>
+
+        <h3>9.5 额外学习资源建议</h3>
+
+        <div class="section" style="background: #e3f2fd;">
+            <h4>推荐复习策略：</h4>
+            <ol>
+                <li>重新阅读讲义，特别是公式推导和假设</li>
+                <li>练习所有给出的例题，不看解答</li>
+                <li>绘制U-T<sub>v</sub>曲线，理解固结非线性特性</li>
+                <li>进行量纲分析，确保理解单位</li>
+                <li>与真实工程项目联系，理解应用意义</li>
+            </ol>
+        </div>
+
+        <footer>
+            <p>这份讲义是基于 CSE39307 Soil Mechanics (Consolidation) 课程制作的。</p>
+            <p>最后更新：2026年4月 | 适用于英文考试</p>
+            <p style="margin-top: 20px; color: #999;">📚 建议：打印此版本进行详细学习，使用PDF版本进行快速参考。</p>
+        </footer>
+    </div>
+</body>
+</html>

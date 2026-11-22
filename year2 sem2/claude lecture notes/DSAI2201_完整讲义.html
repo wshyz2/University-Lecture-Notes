@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSAI2201 数据结构与算法 - 完整讲义</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .toc {
+            background: #f0f4f8;
+            padding: 30px;
+            border-left: 5px solid #667eea;
+        }
+
+        .toc h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .toc ul {
+            list-style: none;
+            columns: 2;
+            column-gap: 40px;
+        }
+
+        .toc li {
+            margin: 10px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .toc li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-size: 1.2em;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .lecture {
+            margin-bottom: 60px;
+            border-left: 5px solid #667eea;
+            padding-left: 30px;
+        }
+
+        .lecture h1 {
+            color: #667eea;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #764ba2;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed #764ba2;
+        }
+
+        .section h3 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .definition-box {
+            background: #f0e6ff;
+            border-left: 4px solid #764ba2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .definition-box strong {
+            color: #764ba2;
+        }
+
+        .example-box {
+            background: #e6f3ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .example-box h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .key-point {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .key-point strong {
+            color: #ff6b6b;
+        }
+
+        .code-box {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .code-box code {
+            color: #333;
+        }
+
+        .diagram {
+            background: #f9f9f9;
+            border: 2px dashed #667eea;
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .algo-box {
+            background: #f0f9ff;
+            border: 2px solid #0ea5e9;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .algo-box h4 {
+            color: #0284c7;
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .comparison-table th {
+            background: #764ba2;
+        }
+
+        .graph-visual {
+            background: white;
+            border: 2px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            text-align: center;
+            font-family: monospace;
+            overflow-x: auto;
+        }
+
+        .step {
+            background: #f0f4f8;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .step strong {
+            color: #667eea;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-item {
+            background: #f0f4f8;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .comparison-item h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .time-complexity {
+            background: #fff8e1;
+            border: 2px solid #ffc107;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+        }
+
+        .note {
+            background: #e8f4f8;
+            border-left: 4px solid #00bcd4;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .highlight {
+            background: #ffeb3b;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .important {
+            color: #ff6b6b;
+            font-weight: 600;
+        }
+
+        footer {
+            background: #f0f4f8;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+
+        .page-break {
+            page-break-after: always;
+            margin: 60px 0;
+            padding-top: 60px;
+            border-top: 3px solid #667eea;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 DSAI2201 数据结构与算法</h1>
+            <p>完整复习讲义 | 香港理工大学 | Dr. Ken FONG</p>
+            <p style="margin-top: 15px; font-size: 0.9em;">Lecture 9: 图论 | Lecture 10: 贪心算法 | Lecture 11: 动态规划</p>
+        </div>
+
+        <div class="toc">
+            <h2>📚 目录结构</h2>
+            <ul>
+                <li><strong>Lecture 9: 图论 (Graph Theory)</strong></li>
+                <li><strong>Lecture 10: 贪心算法 (Greedy Algorithm)</strong></li>
+                <li><strong>Lecture 11: 动态规划 (Dynamic Programming)</strong></li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <!-- ==================== LECTURE 9: GRAPH ==================== -->
+            <div class="lecture">
+                <h1>📊 Lecture 9: 图论 (Graph Theory)</h1>
+
+                <div class="section">
+                    <h2>1️⃣ 图的基本概念</h2>
+
+                    <h3>什么是图？</h3>
+                    <p>图（Graph）是一种非线性数据结构（non-linear data structure），用来表示对象之间的关系。</p>
+
+                    <div class="definition-box">
+                        <strong>图的正式定义：</strong><br>
+                        图 G = (V, E)，其中：
+                        <ul style="margin-top: 10px; margin-left: 20px;">
+                            <li><strong>V</strong> = 顶点集合（Vertices/Nodes）- 图中的各个点</li>
+                            <li><strong>E</strong> = 边集合（Edges）- 连接顶点的线</li>
+                        </ul>
+                    </div>
+
+                    <h3>图与树的区别</h3>
+                    <table>
+                        <tr>
+                            <th>特性</th>
+                            <th>树 (Tree)</th>
+                            <th>图 (Graph)</th>
+                        </tr>
+                        <tr>
+                            <td>是否有循环</td>
+                            <td>没有循环 (Acyclic)</td>
+                            <td>可能有循环 (可有Cycle)</td>
+                        </tr>
+                        <tr>
+                            <td>是否有根节点</td>
+                            <td>有一个根节点 (Rooted)</td>
+                            <td>没有根节点</td>
+                        </tr>
+                        <tr>
+                            <td>连接性</td>
+                            <td>必须连通</td>
+                            <td>可以不连通</td>
+                        </tr>
+                    </table>
+
+                    <h3>关键概念</h3>
+
+                    <div class="example-box">
+                        <h4>📌 顶点的度数 (Degree)</h4>
+                        <p><strong>度数</strong> = 连接到该顶点的边数</p>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>📌 路径与循环</h4>
+                        <p><strong>路径 (Path)：</strong> 一系列顶点序列，相邻顶点通过边连接</p>
+                        <p style="margin-top: 10px;"><strong>循环 (Cycle)：</strong> 从一个顶点出发，最后回到该顶点的路径</p>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>📌 距离 (Distance)</h4>
+                        <p>两个顶点之间的<strong>距离</strong>定义为连接它们的<strong>最短路径上的边数</strong></p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>2️⃣ 图的分类与表示</h2>
+
+                    <h3>无向图 vs 有向图</h3>
+
+                    <div class="comparison">
+                        <div class="comparison-item">
+                            <h4>无向图 (Undirected Graph)</h4>
+                            <p>边<strong>没有方向</strong>，是对称的。如果A连到B，则B也连到A。</p>
+                        </div>
+                        <div class="comparison-item">
+                            <h4>有向图 (Directed Graph)</h4>
+                            <p>边<strong>有方向</strong>，用箭头表示。需要区分 in-degree 和 out-degree。</p>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 30px;">图的表示方法</h3>
+
+                    <h4>邻接矩阵 (Adjacency Matrix)</h4>
+                    <p>用二维矩阵表示顶点之间的连接</p>
+                    <div class="time-complexity">
+                        存储空间：O(n²) | 查询边：O(1) | 获取邻接顶点：O(n)
+                    </div>
+
+                    <h4 style="margin-top: 20px;">邻接表 (Adjacency List)</h4>
+                    <p>用字典存储每个顶点的邻接顶点列表</p>
+                    <div class="time-complexity">
+                        存储空间：O(V+E) | 查询边：O(degree) | 获取邻接顶点：O(degree)
+                    </div>
+
+                    <div class="key-point">
+                        <strong>💡 选择建议：</strong> 稀疏图→邻接表，密集图→邻接矩阵
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>3️⃣ 图的遍历</h2>
+
+                    <h3>广度优先搜索 (BFS)</h3>
+                    <p>从一个顶点开始，<strong>逐层向外</strong>访问所有顶点。使用<strong>队列</strong>。</p>
+
+                    <div class="algo-box">
+                        <h4>🔍 BFS步骤</h4>
+                        <div class="step">1. 从起点加入队列</div>
+                        <div class="step">2. 取出队头顶点，访问所有未访问邻接顶点</div>
+                        <div class="step">3. 重复直到队列为空</div>
+                    </div>
+
+                    <div class="time-complexity">
+                        时间复杂度：O(V + E) | 空间复杂度：O(V)
+                    </div>
+
+                    <h3 style="margin-top: 30px;">深度优先搜索 (DFS)</h3>
+                    <p>从一个顶点开始，<strong>尽可能深</strong>地访问。使用<strong>栈</strong>或<strong>递归</strong>。</p>
+
+                    <div class="algo-box">
+                        <h4>🔍 DFS步骤</h4>
+                        <div class="step">1. 访问当前顶点</div>
+                        <div class="step">2. 递归访问所有未访问邻接顶点</div>
+                        <div class="step">3. 回溯</div>
+                    </div>
+
+                    <div class="time-complexity">
+                        时间复杂度：O(V + E) | 空间复杂度：O(V)
+                    </div>
+
+                    <h3 style="margin-top: 20px;">BFS vs DFS</h3>
+                    <table>
+                        <tr>
+                            <th>特性</th>
+                            <th>BFS</th>
+                            <th>DFS</th>
+                        </tr>
+                        <tr>
+                            <td>数据结构</td>
+                            <td>队列 (Queue)</td>
+                            <td>栈 (Stack) 或递归</td>
+                        </tr>
+                        <tr>
+                            <td>搜索方向</td>
+                            <td>逐层向外（水平）</td>
+                            <td>尽可能深（垂直）</td>
+                        </tr>
+                        <tr>
+                            <td>最短路径</td>
+                            <td>✅ 找得到</td>
+                            <td>❌ 找不到</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="page-break"></div>
+
+            <!-- ==================== LECTURE 10: GREEDY ==================== -->
+            <div class="lecture">
+                <h1>🎯 Lecture 10: 贪心算法 (Greedy Algorithm)</h1>
+
+                <div class="section">
+                    <h2>1️⃣ 贪心算法基础</h2>
+
+                    <h3>什么是贪心算法？</h3>
+                    <p>贪心算法是一种<strong>在每一步都做出局部最优选择</strong>的问题解决策略。</p>
+
+                    <div class="definition-box">
+                        <strong>核心思想：</strong><br>
+                        在每一步选择看起来最优的选项，希望找到全局最优解<br>
+                        <br>
+                        <strong>关键特点：</strong>
+                        <ul style="margin-top: 10px; margin-left: 20px;">
+                            <li><span class="highlight">无回溯</span>：做出选择后不再改变</li>
+                            <li><span class="highlight">高效</span>：通常只需一遍扫描</li>
+                            <li><span class="highlight">非总是最优</span>：某些问题不适用</li>
+                        </ul>
+                    </div>
+
+                    <h3 style="margin-top: 30px;">四个关键特性</h3>
+
+                    <table>
+                        <tr>
+                            <th>特性</th>
+                            <th>说明</th>
+                        </tr>
+                        <tr>
+                            <td>局部优化（Local Optimization）</td>
+                            <td>每一步选择当前看起来最好的选项</td>
+                        </tr>
+                        <tr>
+                            <td>无回溯（No Backtracking）</td>
+                            <td>一旦做出选择，就不再改变</td>
+                        </tr>
+                        <tr>
+                            <td>高效性（Efficiency）</td>
+                            <td>通常有较低的时间复杂度</td>
+                        </tr>
+                        <tr>
+                            <td>非总是最优（Not Always Optimal）</td>
+                            <td>不能保证全局最优解</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="section">
+                    <h2>2️⃣ 区间调度问题 (Interval Scheduling)</h2>
+
+                    <h3>问题定义</h3>
+                    <p>给定n个工作，每个工作j有开始时间s<sub>j</sub>和结束时间f<sub>j</sub>。两个工作<strong>兼容</strong>当且仅当不重叠。目标：找最大数量互相兼容的工作。</p>
+
+                    <h3 style="margin-top: 30px;">最优贪心策略</h3>
+
+                    <div class="algo-box">
+                        <h4>🎯 按结束时间排序</h4>
+                        <div class="step">
+                            <strong>步骤1：</strong> 按结束时间f<sub>j</sub>排序工作（从早到晚）
+                        </div>
+                        <div class="step">
+                            <strong>步骤2：</strong> 逐个检查工作，选择与已选工作兼容的工作
+                        </div>
+                        <div class="step">
+                            <strong>步骤3：</strong> 重复直到无更多兼容工作
+                        </div>
+                    </div>
+
+                    <div class="code-box">
+<pre>def greedy_schedule(jobs):
+    # jobs = [(start, finish), ...]
+    jobs.sort(key=lambda x: x[1])
+    results = []
+    last_finish = 0
+
+    for start, finish in jobs:
+        if start >= last_finish:
+            results.append((start, finish))
+            last_finish = finish
+
+    return results
+                    </pre>
+                    </div>
+
+                    <div class="time-complexity">
+                        时间复杂度：O(n log n)（排序）| 空间复杂度：O(n)
+                    </div>
+
+                    <div class="key-point">
+                        <strong>✅ 正确性：</strong> 选择结束最早的工作为后续工作留下最多时间
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>3️⃣ 最小生成树 (MST)</h2>
+
+                    <h3>基本概念</h3>
+                    <p>给定连通、无向、加权图，找<strong>生成树</strong>使其<strong>总权值最小</strong>。</p>
+
+                    <div class="definition-box">
+                        <strong>生成树：</strong> 包含所有顶点和某些边、无循环的子图<br>
+                        <strong>最小生成树：</strong> 所有边权值之和最小的生成树
+                    </div>
+
+                    <h3 style="margin-top: 30px;">Kruskal算法：增长森林</h3>
+
+                    <div class="algo-box">
+                        <h4>🔍 Kruskal思路</h4>
+                        <div class="step">1. 按权值从小到大排序所有边</div>
+                        <div class="step">2. 遍历排序后的边，选择不形成循环的边</div>
+                        <div class="step">3. 重复直到选择V-1条边</div>
+                    </div>
+
+                    <div class="time-complexity">
+                        时间复杂度：O(E log E) | 空间复杂度：O(V)
+                    </div>
+
+                    <h3 style="margin-top: 30px;">Prim算法：增长树</h3>
+
+                    <div class="algo-box">
+                        <h4>🔍 Prim思路</h4>
+                        <div class="step">1. 从任意顶点开始，加入已选集合</div>
+                        <div class="step">2. 找连接已选和未选的最小权边</div>
+                        <div class="step">3. 将另一端加入已选集合，重复</div>
+                    </div>
+
+                    <div class="time-complexity">
+                        时间复杂度：O(V²) 或 O((V+E) log V) | 空间复杂度：O(V)
+                    </div>
+
+                    <h3 style="margin-top: 20px;">Kruskal vs Prim</h3>
+                    <table>
+                        <tr>
+                            <th>特性</th>
+                            <th>Kruskal</th>
+                            <th>Prim</th>
+                        </tr>
+                        <tr>
+                            <td>思想</td>
+                            <td>增长森林</td>
+                            <td>增长一棵树</td>
+                        </tr>
+                        <tr>
+                            <td>关键结构</td>
+                            <td>并查集 (Union-Find)</td>
+                            <td>优先队列</td>
+                        </tr>
+                        <tr>
+                            <td>适用图</td>
+                            <td>稀疏图</td>
+                            <td>密集图</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="page-break"></div>
+
+            <!-- ==================== LECTURE 11: DYNAMIC PROGRAMMING ==================== -->
+            <div class="lecture">
+                <h1>💡 Lecture 11: 动态规划 (Dynamic Programming)</h1>
+
+                <div class="section">
+                    <h2>1️⃣ 动态规划基础</h2>
+
+                    <h3>什么是动态规划？</h3>
+                    <p>动态规划是一种优化算法设计技术，用于解决具有<strong>重叠子问题</strong>和<strong>最优子结构</strong>的问题。</p>
+
+                    <div class="definition-box">
+                        <strong>核心思想：</strong><br>
+                        将大问题分解为小问题，<strong>保存小问题答案</strong>，避免重复计算，由小问题答案组成大问题答案
+                    </div>
+
+                    <h3 style="margin-top: 30px;">与分治法的区别</h3>
+
+                    <div class="comparison">
+                        <div class="comparison-item">
+                            <h4>分治法 (Divide & Conquer)</h4>
+                            <p>子问题<strong>互不相关</strong>。例：快速排序、合并排序</p>
+                        </div>
+                        <div class="comparison-item">
+                            <h4>动态规划 (Dynamic Programming)</h4>
+                            <p>子问题<strong>互相重叠</strong>。例：斐波那契、背包问题</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>2️⃣ 斐波那契序列：DP的入门例子</h2>
+
+                    <h3>问题定义</h3>
+
+                    <div class="definition-box">
+                        <strong>递推式：</strong> F<sub>n</sub> = F<sub>n-1</sub> + F<sub>n-2</sub><br>
+                        <strong>初始值：</strong> F<sub>0</sub> = 0, F<sub>1</sub> = 1<br>
+                        <strong>数列：</strong> 0, 1, 1, 2, 3, 5, 8, 13, 21, ...
+                    </div>
+
+                    <h3 style="margin-top: 30px;">方法1：朴素递归（效率极低）</h3>
+
+                    <div class="code-box">
+<pre>def fibonacci_naive(n):
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+    return fibonacci_naive(n-1) + fibonacci_naive(n-2)
+                    </pre>
+                    </div>
+
+                    <div class="time-complexity">
+                        时间复杂度：O(2<sup>n</sup>) 指数级！ | 问题：大量重复计算
+                    </div>
+
+                    <h3 style="margin-top: 30px;">方法2：自上而下DP（记忆化）</h3>
+
+                    <div class="code-box">
+<pre>def fibonacci_memo(n, memo=None):
+    if memo is None:
+        memo = {}
+
+    if n in memo:
+        return memo[n]
+
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+
+    memo[n] = fibonacci_memo(n-1, memo) + fibonacci_memo(n-2, memo)
+    return memo[n]
+                    </pre>
+                    </div>
+
+                    <div class="time-complexity">
+                        时间复杂度：O(n) | 空间复杂度：O(n)
+                    </div>
+
+                    <h3 style="margin-top: 30px;">方法3：自下而上DP（迭代）</h3>
+
+                    <div class="code-box">
+<pre>def fibonacci_bottom_up(n):
+    F = [0, 1]
+    for i in range(2, n+1):
+        F.append(F[i-1] + F[i-2])
+    return F[n]
+                    </pre>
+                    </div>
+
+                    <div class="time-complexity">
+                        时间复杂度：O(n) | 空间复杂度：O(n)
+                    </div>
+
+                    <h3 style="margin-top: 30px;">方法4：空间优化</h3>
+
+                    <div class="code-box">
+<pre>def fibonacci_optimized(n):
+    if n <= 1:
+        return n
+    prev, curr = 0, 1
+    for _ in range(2, n+1):
+        prev, curr = curr, prev + curr
+    return curr
+                    </pre>
+                    </div>
+
+                    <div class="time-complexity">
+                        时间复杂度：O(n) | 空间复杂度：O(1)（最优！）
+                    </div>
+
+                    <h3 style="margin-top: 20px;">效率对比</h3>
+                    <table>
+                        <tr>
+                            <th>方法</th>
+                            <th>时间复杂度</th>
+                            <th>空间复杂度</th>
+                        </tr>
+                        <tr>
+                            <td>朴素递归</td>
+                            <td>O(2<sup>n</sup>)</td>
+                            <td>O(n)</td>
+                        </tr>
+                        <tr>
+                            <td>记忆化DP</td>
+                            <td>O(n)</td>
+                            <td>O(n)</td>
+                        </tr>
+                        <tr>
+                            <td>迭代DP</td>
+                            <td>O(n)</td>
+                            <td>O(n)</td>
+                        </tr>
+                        <tr>
+                            <td>空间优化</td>
+                            <td>O(n)</td>
+                            <td>O(1)</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="section">
+                    <h2>3️⃣ DP的两个关键特性</h2>
+
+                    <div class="definition-box">
+                        <strong>特性1：最优子结构 (Optimal Substructure)</strong><br>
+                        问题的最优解可由子问题的最优解组合而成<br>
+                        <br>
+                        <strong>特性2：重叠子问题 (Overlapping Subproblems)</strong><br>
+                        相同的子问题在求解过程中出现多次
+                    </div>
+
+                    <div class="key-point">
+                        <strong>✅ DP应用条件：</strong><br>
+                        必须同时满足这两个特性！
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>4️⃣ 设计DP算法的步骤</h2>
+
+                    <div class="algo-box">
+                        <h4>🎯 标准流程</h4>
+                        <div class="step">1. 定义子问题及其表示方式</div>
+                        <div class="step">2. 编写递推关系式（状态转移方程）</div>
+                        <div class="step">3. 确定基础情况（Base Cases）</div>
+                        <div class="step">4. 选择实现方法（自上而下或自下而上）</div>
+                        <div class="step">5. 计算最终答案</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>5️⃣ 自上而下 vs 自下而上</h2>
+
+                    <table>
+                        <tr>
+                            <th>方面</th>
+                            <th>自上而下（Top-Down Memoization）</th>
+                            <th>自下而上（Bottom-Up Iteration）</th>
+                        </tr>
+                        <tr>
+                            <td>思考方式</td>
+                            <td>像正常递归，但保存结果</td>
+                            <td>先解小问题，再解大问题</td>
+                        </tr>
+                        <tr>
+                            <td>实现方式</td>
+                            <td>递归 + 字典</td>
+                            <td>循环 + 表格</td>
+                        </tr>
+                        <tr>
+                            <td>只计算需要的</td>
+                            <td>✅ 是</td>
+                            <td>❌ 否</td>
+                        </tr>
+                        <tr>
+                            <td>递归开销</td>
+                            <td>有开销</td>
+                            <td>无开销，更高效</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="section">
+                    <h2>6️⃣ 加权区间调度问题</h2>
+
+                    <h3>问题定义</h3>
+                    <p>每个工作有<strong>开始时间、结束时间和权值（价值）</strong>。找不重叠工作集合使总权值最大。</p>
+
+                    <h3 style="margin-top: 20px;">DP解法</h3>
+
+                    <div class="definition-box">
+                        <strong>定义：</strong> OPT(j) = 前j个工作的最优权值和<br>
+                        <br>
+                        <strong>递推式：</strong><br>
+                        OPT(j) = max(v<sub>j</sub> + OPT(p(j)), OPT(j-1))<br>
+                        <br>
+                        其中p(j)是最大兼容工作的索引<br>
+                        <strong>基础情况：</strong> OPT(0) = 0
+                    </div>
+
+                    <div class="time-complexity">
+                        时间复杂度：O(n²) 或 O(n log n) | 空间复杂度：O(n)
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>7️⃣ 0/1背包问题</h2>
+
+                    <h3>问题定义</h3>
+                    <p>给定n个物品（权重w<sub>i</sub>、价值v<sub>i</sub>）和背包容量W。选择物品使总价值最大且不超容量。<strong>每个物品要么全部拿，要么都不拿。</strong></p>
+
+                    <h3 style="margin-top: 20px;">DP解法</h3>
+
+                    <div class="definition-box">
+                        <strong>定义：</strong> DP[i][w] = 前i个物品，容量为w的最大价值<br>
+                        <br>
+                        <strong>递推式：</strong><br>
+                        DP[i][w] = max(v<sub>i</sub> + DP[i-1][w-w<sub>i</sub>], DP[i-1][w])<br>
+                        <br>
+                        <strong>基础情况：</strong> DP[0][w] = 0
+                    </div>
+
+                    <div class="code-box">
+<pre>def knapsack_01(weights, values, capacity):
+    n = len(weights)
+    dp = [[0] * (capacity + 1) for _ in range(n + 1)]
+
+    for i in range(1, n + 1):
+        for w in range(capacity + 1):
+            exclude = dp[i-1][w]
+            include = 0
+            if weights[i-1] <= w:
+                include = values[i-1] + dp[i-1][w - weights[i-1]]
+            dp[i][w] = max(include, exclude)
+
+    return dp[n][capacity]
+                    </pre>
+                    </div>
+
+                    <div class="time-complexity">
+                        时间复杂度：O(n × W) | 空间复杂度：O(n × W) 或 O(W)（优化）
+                    </div>
+
+                    <div class="key-point">
+                        <strong>💡 为什么0/1背包需要DP？</strong><br>
+                        贪心算法在这里<span class="important">失败</span>，因为不满足最优子结构
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>📚 <strong>DSAI2201 数据结构与算法完整讲义</strong></p>
+            <p>香港理工大学 | Dr. Ken FONG | 2026年4月</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">中文讲解 + 英文术语 | 包含图论、贪心和动态规划的核心概念与经典问题</p>
+        </footer>
+    </div>
+</body>
+</html>

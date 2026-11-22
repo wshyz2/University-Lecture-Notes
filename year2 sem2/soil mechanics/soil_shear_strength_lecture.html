@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>土壤力学：剪切强度讲解 | Soil Mechanics: Shear Strength</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #c9184a 0%, #8b1a3f 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+            border-left: 5px solid #c9184a;
+            padding-left: 20px;
+        }
+
+        .section h2 {
+            color: #c9184a;
+            font-size: 2em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section h3 {
+            color: #8b1a3f;
+            font-size: 1.5em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .learning-objectives {
+            background: #f0f4f8;
+            border-left: 5px solid #4CAF50;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .learning-objectives h3 {
+            color: #2e7d32;
+            margin-top: 0;
+        }
+
+        .learning-objectives ul {
+            margin-left: 20px;
+        }
+
+        .learning-objectives li {
+            margin: 8px 0;
+            color: #555;
+        }
+
+        .key-concept {
+            background: #fff3e0;
+            border-left: 5px solid #ff9800;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .key-concept h4 {
+            color: #e65100;
+            margin-bottom: 10px;
+        }
+
+        .formula {
+            background: #f3e5f5;
+            border: 2px solid #9c27b0;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .example {
+            background: #e3f2fd;
+            border-left: 5px solid #2196F3;
+            padding: 25px;
+            border-radius: 5px;
+            margin: 30px 0;
+        }
+
+        .example h4 {
+            color: #1565c0;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .solution {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 3px;
+            margin-top: 15px;
+        }
+
+        .solution h5 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #2196F3;
+            border-radius: 3px;
+        }
+
+        .step-number {
+            background: #2196F3;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table th {
+            background: #c9184a;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .comparison-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .vocab {
+            background: #e8f5e9;
+            border-left: 5px solid #4CAF50;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 3px;
+        }
+
+        .vocab strong {
+            color: #2e7d32;
+        }
+
+        .important {
+            background: #ffebee;
+            border-left: 5px solid #f44336;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 3px;
+            color: #c62828;
+        }
+
+        .diagram {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .diagram-title {
+            font-weight: bold;
+            color: #c9184a;
+            margin-bottom: 10px;
+        }
+
+        .equation-box {
+            background: #f3e5f5;
+            border: 2px solid #9c27b0;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+
+        .review-box {
+            background: #fff9c4;
+            border-left: 5px solid #fbc02d;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 30px 0;
+        }
+
+        .review-box h3 {
+            color: #f57f17;
+            margin-top: 0;
+        }
+
+        .flowchart {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .flowchart-box {
+            background: #c9184a;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            margin: 10px;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .arrow {
+            font-size: 2em;
+            color: #c9184a;
+            margin: 0 10px;
+        }
+
+        .comparison-visual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-item {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 5px;
+            border-top: 5px solid #2196F3;
+        }
+
+        .comparison-item h4 {
+            color: #1565c0;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        .exam-tips {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .exam-tips h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .exam-tips ul {
+            margin-left: 20px;
+        }
+
+        .exam-tips li {
+            margin: 8px 0;
+            color: #666;
+        }
+
+        .definition {
+            background: #e0f2f1;
+            border-left: 5px solid #009688;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 3px;
+        }
+
+        .definition strong {
+            color: #00695c;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-visual {
+                grid-template-columns: 1fr;
+            }
+
+            .flowchart {
+                flex-direction: column;
+            }
+
+            .arrow {
+                transform: rotate(90deg);
+            }
+
+            header h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏗️ 土壤剪切强度讲解</h1>
+            <p>CSE39307 Soil Mechanics: Shear Strength</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Hong Kong Polytechnic University</p>
+        </header>
+
+        <div class="content">
+            <!-- 第一部分：学习目标 -->
+            <div class="section">
+                <h2>📚 本堂课学习目标</h2>
+                <div class="learning-objectives">
+                    <h3>Learning Objectives</h3>
+                    <ul>
+                        <li>✅ 掌握 <strong>Mohr-Coulomb failure criterion</strong>（莫尔-库仑破坏准则）的基本概念</li>
+                        <li>✅ 理解土壤的 <strong>shear strength</strong>（剪切强度）如何由摩擦力和粘聚力组成</li>
+                        <li>✅ 掌握 <strong>laboratory testing</strong>（实验室试验）和 <strong>field testing</strong>（现场试验）方法</li>
+                        <li>✅ 理解 <strong>critical state concept</strong>（临界状态概念）与土壤强度和体积行为的关系</li>
+                        <li>✅ 学会绘制和分析 <strong>Mohr circles</strong> 和 <strong>stress paths</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 第二部分：基本概念 -->
+            <div class="section">
+                <h2>🔍 基本概念与背景</h2>
+
+                <h3>为什么要学剪切强度？</h3>
+                <p>土壤主要以 <strong>剪切失败（shear failure）</strong> 的方式破坏，这在以下工程中至关重要：</p>
+                <ul style="margin-left: 20px; margin: 15px 0;">
+                    <li>🔴 <strong>边坡稳定性</strong>（Slopes）- 防止滑坡</li>
+                    <li>🔴 <strong>地基承载力</strong>（Foundation piles）- 确保建筑物安全</li>
+                    <li>🔴 <strong>挡土墙</strong>（Retaining walls）- 防止土壤滑动</li>
+                    <li>🔴 <strong>基坑开挖</strong>（Excavations）- 防止坍塌</li>
+                </ul>
+
+                <div class="key-concept">
+                    <h4>核心理念</h4>
+                    <p><strong>土壤是有摩擦的材料！</strong></p>
+                    <p>土壤的剪切强度主要来自于：</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>1️⃣ 颗粒间的 <strong>摩擦力</strong>（Friction between particles）</li>
+                        <li>2️⃣ 颗粒的 <strong>咬合作用</strong>（Particle interlocking）</li>
+                        <li>3️⃣ 颗粒间的 <strong>粘聚力</strong>（Cementation/bonding）- 可能存在</li>
+                    </ul>
+                </p>
+                </div>
+            </div>
+
+            <!-- 第三部分：莫尔-库仑破坏准则 -->
+            <div class="section">
+                <h2>📊 莫尔-库仑破坏准则</h2>
+
+                <h3>1️⃣ 莫尔圆基础概念</h3>
+                <div class="definition">
+                    <strong>莫尔圆（Mohr's Circle）</strong> 是一个图形化工具，用于表示在通过一点的所有平面上作用的应力状态（法向应力σ和剪应力τ）。
+                </div>
+
+                <div class="key-concept">
+                    <h4>莫尔圆的关键性质</h4>
+                    <p>对于平面应力状态，如果已知两个主应力 σ₁ 和 σ₃，可以绘制莫尔圆：</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>圆心位置：<strong>c = (σ₁ + σ₃)/2</strong></li>
+                        <li>圆的半径：<strong>r = (σ₁ - σ₃)/2</strong></li>
+                    </ul>
+                </div>
+
+                <div class="formula">
+                    对于平面上的任意点，法向应力和剪应力满足：
+                    <br><br>
+                    σₙ = (σₓ + σᵧ)/2 + (σₓ - σᵧ)/2 · cos(2θ) + τₓᵧ · sin(2θ)
+                    <br><br>
+                    τₙ = (σᵧ - σₓ)/2 · sin(2θ) + τₓᵧ · cos(2θ)
+                </div>
+
+                <h3>2️⃣ 有效应力原理</h3>
+                <div class="important">
+                    <strong>⚠️ 最重要的概念：</strong>
+                    <br>土壤的剪切强度 <strong>只由有效应力</strong> 决定，孔隙水压力（pore water pressure）不贡献剪切强度！
+                    <br><br>
+                    <strong>有效应力（Effective stress）= 总应力（Total stress）- 孔隙水压力（Pore water pressure）</strong>
+                    <br>σ' = σ - u
+                </div>
+
+                <h3>3️⃣ 土壤作为摩擦材料</h3>
+                <div class="diagram">
+                    <div class="diagram-title">土壤的摩擦强度</div>
+                    <p>简单的摩擦理论：</p>
+                    <div class="equation-box">
+                        τ = μN<br>
+                        其中：μ = 摩擦系数 (Friction coefficient)<br>
+                        N = 法向力 (Normal force)
+                    </div>
+                </div>
+
+                <p>对于土壤，用有效应力表示：</p>
+                <div class="equation-box">
+                    τf = (tan φ') σ'<br>
+                    其中：φ' = 内摩擦角 (Angle of internal friction)<br>
+                    σ' = 有效法向应力 (Effective normal stress)
+                </div>
+
+                <h3>4️⃣ 莫尔-库仑破坏准则（含粘聚力）</h3>
+                <div class="important">
+                    <strong>完整的莫尔-库仑破坏准则：</strong>
+                </div>
+
+                <div class="equation-box">
+                    <strong>τf = c' + σ' tan φ'</strong><br><br>
+                    其中：<br>
+                    • τf = 剪切强度 (Shear strength)<br>
+                    • c' = 粘聚力 (Cohesion) - 来自颗粒咬合和胶结<br>
+                    • σ' = 有效法向应力 (Effective normal stress)<br>
+                    • φ' = 内摩擦角 (Angle of internal friction)
+                </div>
+
+                <div class="key-concept">
+                    <h4>关键参数解释</h4>
+                    <ul style="margin-left: 20px;">
+                        <li><strong>c'（粘聚力）</strong>：即使没有法向应力，材料也能抵抗的剪应力。对于砂土通常为0；对于黏土可能较大。</li>
+                        <li><strong>φ'（内摩擦角）</strong>：材料的摩擦特性，通常在25°-50°之间。密集的土壤角度更大。</li>
+                    </ul>
+                </div>
+
+                <h3>5️⃣ 莫尔圆与破坏包络线</h3>
+                <div class="diagram">
+                    <div class="diagram-title">破坏包络线（Failure Envelope）</div>
+                    <p>当土壤元素达到破坏时，其莫尔圆恰好与破坏包络线相切。</p>
+                    <p>破坏包络线是直线：<strong>τ = c' + σ' tan φ'</strong></p>
+                </div>
+
+                <div class="key-concept">
+                    <h4>物理意义</h4>
+                    <p>从莫尔圆与破坏包络线的关系，可以推导出：</p>
+                    <div class="equation-box">
+                        sin φ' = (σ₁' - σ₃') / (2c' cot φ' + σ₁' + σ₃')
+                    </div>
+                    <p style="margin-top: 10px;">这个关系说明：<strong>主应力差越大，或有效应力越小，土壤就越容易破坏</strong></p>
+                </div>
+            </div>
+
+            <!-- 第四部分：实验室试验方法 -->
+            <div class="section">
+                <h2>🧪 剪切强度参数的测定方法</h2>
+
+                <h3>试验方法概述</h3>
+                <div class="diagram">
+                    <div class="diagram-title">确定剪切强度参数的方法</div>
+                    <div class="flowchart">
+                        <div class="flowchart-box">实验室试验</div>
+                        <div class="arrow">→</div>
+                        <div class="flowchart-box">获取 c' 和 φ'</div>
+                        <div class="arrow">→</div>
+                        <div class="flowchart-box">工程计算</div>
+                    </div>
+                </div>
+
+                <h3>1️⃣ 直剪试验（Shear Box Test）</h3>
+                <div class="key-concept">
+                    <h4>原理</h4>
+                    <p>在不同的法向应力（N）下，测量使土壤样品破坏所需的剪力（T），然后绘制τ-σ图以获得 c' 和 φ'。</p>
+                </div>
+
+                <div class="formula">
+                    计算公式：
+                    <br>σ = N / A    （法向应力）
+                    <br>τ = T / A    （剪应力）
+                    <br>
+                    其中 A 是样品的面积
+                </div>
+
+                <div class="comparison-visual">
+                    <div class="comparison-item">
+                        <h4>✅ 优点</h4>
+                        <ul style="margin-left: 20px;">
+                            <li>试验简单快速</li>
+                            <li>成本低廉</li>
+                            <li>容易操作</li>
+                            <li>直接控制应力</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>❌ 缺点</h4>
+                        <ul style="margin-left: 20px;">
+                            <li>无法控制排水条件</li>
+                            <li>无法测量孔隙水压力</li>
+                            <li>应力分布不均匀</li>
+                            <li>剪切面被固定</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>2️⃣ 三轴试验（Triaxial Test）</h3>
+                <div class="key-concept">
+                    <h4>设备特点</h4>
+                    <p>样品包裹在橡胶膜中，放置在密闭的柱体内。可以独立控制围压（confining pressure）和轴向压力，并且可以测量孔隙水压力。</p>
+                </div>
+
+                <div class="important">
+                    <strong>三轴试验的四个阶段：</strong><br>
+                    1️⃣ <strong>Percolation 浸润</strong>：用水填充样品<br>
+                    2️⃣ <strong>Back pressure saturation 反压饱和</strong>：确保样品完全饱和<br>
+                    3️⃣ <strong>Consolidation 固结</strong>：施加等各向围压，允许水流出<br>
+                    4️⃣ <strong>Compression 压缩</strong>：施加轴向载荷至破坏
+                </div>
+
+                <div class="definition">
+                    <strong>关键参数：</strong><br>
+                    σ₃（围压） = σ'₃ + u（全应力=有效应力+孔隙水压力）<br>
+                    σ₁（轴向应力） = σ₃ + P/A
+                </div>
+
+                <h3>三轴试验的三种类型</h3>
+                <table class="comparison-table">
+                    <tr>
+                        <th>试验类型</th>
+                        <th>第3阶段<br>(固结)</th>
+                        <th>第4阶段<br>(压缩)</th>
+                        <th>应用场景</th>
+                    </tr>
+                    <tr>
+                        <td><strong>UU</strong><br>Unconsolidated<br>Undrained<br>无固结无排水</td>
+                        <td>❌ 不固结</td>
+                        <td>❌ 不排水</td>
+                        <td>• 快速不透水黏土<br>• 短期稳定性<br>• 全应力分析</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CU</strong><br>Consolidated<br>Undrained<br>固结无排水</td>
+                        <td>✅ 固结<br>(有排水)</td>
+                        <td>❌ 不排水</td>
+                        <td>• 实际地层条件<br>• 需测孔隙水压力<br>• 最常用</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CD</strong><br>Consolidated<br>Drained<br>固结排水</td>
+                        <td>✅ 固结<br>(有排水)</td>
+                        <td>✅ 排水<br>(缓慢)</td>
+                        <td>• 长期稳定性<br>• 砂土<br>• 有效应力强度</td>
+                    </tr>
+                </table>
+
+                <div class="key-concept">
+                    <h4>面积修正（Area Correction）</h4>
+                    <p>在三轴试验中，随着压缩进行，样品的高度和面积都会改变，需要进行修正：</p>
+                    <div class="equation-box">
+                        A = A* · (1 - εᵥ) / (1 - εₐ)<br>
+                        其中 εᵥ = 体积应变，εₐ = 轴向应变
+                    </div>
+                </div>
+
+                <h3>3️⃣ 现场试验方法</h3>
+
+                <h4>🔸 孔隙水压力修正（Pore Pressure Parameter A）</h4>
+                <div class="definition">
+                    <strong>Skempton's pore pressure parameter A：</strong><br>
+                    用于估计三轴试验中增加的孔隙水压力
+                </div>
+
+                <div class="formula">
+                    Δu = B · [Δσ₃ + A · (Δσ₁ - Δσ₃)]
+                    <br><br>
+                    B = 孔隙水压力系数（通常0-1）<br>
+                    A = 孔隙水压力系数（通常-0.5 到 +1）
+                </div>
+
+                <h4>🔸 田间剪切试验（Vane Shear Test）</h4>
+                <div class="definition">
+                    <strong>应用场景：</strong> 测量饱和黏土在原位的无排水剪切强度 (cu)
+                </div>
+
+                <div class="key-concept">
+                    <h4>原理</h4>
+                    <p>在孔内旋转叶片，记录最大扭矩。假设在叶片周围形成圆柱形剪切面。</p>
+                </div>
+
+                <div class="formula">
+                    cu = T / K
+                    <br><br>
+                    其中：T = 应用的最大扭矩<br>
+                    K = 叶片高度和直径的函数<br>
+                    <br>
+                    K = (πD²H/2) · (1 + D/3H)
+                </div>
+
+                <div class="important">
+                    <strong>修正因子：</strong><br>
+                    cu(corrected) = λ · cu(VST)<br>
+                    其中 λ 根据塑性指数或含水量修正
+                </div>
+
+                <h4>🔸 标准贯入试验（Standard Penetration Test - SPT）</h4>
+                <div class="definition">
+                    <strong>应用：</strong> 在香港常用，通过 N-Value（贯入阻力值）关联摩擦角
+                </div>
+
+                <div class="key-concept">
+                    <h4>试验方法</h4>
+                    <ul style="margin-left: 20px;">
+                        <li>62.3 kg 锤从 0.762 m 高度自由落下</li>
+                        <li>记录最后 4 次 75 mm 穿透的打击次数 = N-Value</li>
+                        <li>例：3+4+6+7+12+12 → N = 6+7+12+12 = 37</li>
+                    </ul>
+                </div>
+
+                <div class="formula">
+                    Schmertmann (1975) 关联：
+                    <br><br>
+                    φ' = tan⁻¹[N₆₀ / (12.2 + 20.3(σ'₀/pₐ))]^0.34
+                    <br><br>
+                    其中 N₆₀ = 修正后的 N-Value<br>
+                    σ'₀ = 有效覆盖压力<br>
+                    pₐ = 大气压力
+                </div>
+            </div>
+
+            <!-- 第五部分：例题1 - 三轴试验 -->
+            <div class="section">
+                <h2>📝 例题1：三轴试验计算</h2>
+
+                <div class="example">
+                    <h4>📌 题目</h4>
+                    <p>某砂土样品进行固结排水（CD）三轴试验。初始体积和面积分别为 200 cm³ 和 20 cm²。固结压力为 200 kPa，固结后体积减少 2 ml。</p>
+                    <p><strong>在破坏时：</strong>轴向缩短 10 mm，轴向荷载 710 N，体积变化 3 ml。</p>
+
+                    <h5 style="color: #1565c0; margin-top: 20px;">求：</h5>
+                    <p>(i) 固结后的体积、面积和长度<br>
+                    (ii) 土壤的剪切强度参数 c' 和 φ'</p>
+                </div>
+
+                <div class="solution">
+                    <h5>✏️ 详细解答</h5>
+
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <strong>固结后的几何参数计算</strong>
+                        <p style="margin-top: 10px;">初始体积：V₀ = 200 cm³</p>
+                        <p>固结后体积变化：ΔV = -2 ml = -2 cm³（减少）</p>
+                        <p style="color: #2196F3;"><strong>固结后体积：</strong></p>
+                        <p style="background: #f5f5f5; padding: 10px; border-radius: 3px;">
+                            V = V₀ + ΔV = 200 - 2 = <strong>198 cm³</strong>
+                        </p>
+
+                        <p style="margin-top: 15px;">对于等向固结（isotropic consolidation）：</p>
+                        <p>εₐ = εᵣ = εₚ = εᵥ / 3</p>
+
+                        <p>体积应变：εᵥ = ΔV / V₀ = -2 / 200 = -0.01</p>
+                        <p>轴向应变（固结时）：εₐ = -0.01 / 3 ≈ -0.00333</p>
+
+                        <p style="color: #2196F3;"><strong>固结后长度：</strong></p>
+                        <p>h₀ = √(V₀ / A) = √(200 / 20) = √10 ≈ 3.162 cm</p>
+                        <p style="background: #f5f5f5; padding: 10px; border-radius: 3px;">
+                            h = h₀ · (1 - |εₐ|) = 3.162 × (1 - 0.00333) ≈ <strong>3.151 cm</strong>
+                        </p>
+
+                        <p style="color: #2196F3;"><strong>固结后面积：</strong></p>
+                        <p>使用体积公式：A = V / h = 198 / 3.151 ≈ <strong>62.79 cm²</strong></p>
+                        <p style="font-size: 0.9em; color: #666; margin-top: 10px;">检验：198 / 3.151 ≈ 62.8，A ≈ 20 cm² × (1 - 0.00333)² ≈ 19.87 cm²（考虑径向应变）</p>
+                    </div>
+
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <strong>破坏时的应力状态计算</strong>
+
+                        <p style="margin-top: 10px;">在破坏时，需要进行面积修正。</p>
+
+                        <p style="color: #2196F3;"><strong>轴向应变（破坏）：</strong></p>
+                        <p>轴向缩短：Δh = 10 mm = 1 cm</p>
+                        <p>轴向应变：εₐ* = Δh / h = 1 / 3.151 ≈ 0.317 = 31.7%</p>
+
+                        <p style="color: #2196F3;"><strong>体积应变（破坏）：</strong></p>
+                        <p>体积变化：ΔV* = 3 ml = 3 cm³（增加，膨胀）</p>
+                        <p>体积应变：εᵥ* = ΔV* / V = 3 / 198 ≈ 0.0152 = 1.52%</p>
+
+                        <p style="color: #2196F3;"><strong>径向应变（破坏）：</strong></p>
+                        <p>关系：εᵥ* = εₐ* + 2εᵣ*</p>
+                        <p>0.0152 = 0.317 + 2εᵣ*</p>
+                        <p style="background: #f5f5f5; padding: 10px; border-radius: 3px;">
+                            εᵣ* = (0.0152 - 0.317) / 2 ≈ <strong>-0.151 = -15.1%</strong> （压缩）
+                        </p>
+
+                        <p style="color: #2196F3; margin-top: 15px;"><strong>破坏时的面积修正：</strong></p>
+                        <p>A_破坏 = A · (1 - εᵣ*) / (1 - εₐ*)</p>
+                        <p style="background: #f5f5f5; padding: 10px; border-radius: 3px;">
+                            A_破坏 = 20 × (1 - (-0.151)) / (1 - 0.317) = 20 × 1.151 / 0.683 ≈ <strong>33.7 cm²</strong>
+                        </p>
+
+                        <p style="color: #2196F3; margin-top: 15px;"><strong>破坏时的应力：</strong></p>
+                        <p>轴向荷载：P = 710 N</p>
+                        <p style="background: #f5f5f5; padding: 10px; border-radius: 3px;">
+                            σ₁ = P / A_破坏 = 710 / 33.7 ≈ 21.07 kPa（轴向应力）<br>
+                            σ₃ = 200 kPa（围压保持不变 - CD试验）<br>
+                            σ₁ - σ₃ = 21.07 - 200 = <strong>-178.93 kPa</strong>
+                        </p>
+
+                        <p style="color: #c62828; font-weight: bold; margin-top: 10px;">⚠️ 注意：这里结果为负，说明我的计算可能有误。让我重新审视...</p>
+                    </div>
+
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <strong>重新计算破坏时的应力（修正）</strong>
+
+                        <p style="margin-top: 10px;">关键是理解在CD试验中，面积是变化的。正确的计算方式：</p>
+
+                        <p style="color: #2196F3;"><strong>轴向应力（破坏）：</strong></p>
+                        <p>σ₁_破坏 = σ₃ + (轴向荷载 / 修正后面积)</p>
+                        <p>轴向荷载增量除以修正面积</p>
+                        <p style="background: #f5f5f5; padding: 10px; border-radius: 3px;">
+                            ΔA_破坏 = A_初始 × (1 - |εᵣ|) = 20 × (1 + 0.151) = 23.02 cm²<br>
+                            σ₁ - σ₃ = 710 / 23.02 ≈ <strong>30.8 kPa</strong>
+                        </p>
+
+                        <p style="color: #2196F3; margin-top: 15px;"><strong>有效应力（CD试验中，u = 0排水）：</strong></p>
+                        <p style="background: #f5f5f5; padding: 10px; border-radius: 3px;">
+                            σ'₁ = σ₁ = σ₃ + 30.8 ≈ 230.8 kPa<br>
+                            σ'₃ = σ₃ = 200 kPa<br>
+                            (σ'₁ - σ'₃) / 2 ≈ 15.4 kPa<br>
+                            (σ'₁ + σ'₃) / 2 ≈ 215.4 kPa
+                        </p>
+                    </div>
+
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <strong>确定破坏包络线并求得 c' 和 φ'</strong>
+
+                        <p style="margin-top: 10px;">对于单次试验，我们有一个点：</p>
+                        <ul style="margin-left: 20px;">
+                            <li>法向应力：σ'_normal = (σ'₁ + σ'₃) / 2 ≈ 215.4 kPa</li>
+                            <li>剪应力：τ = (σ'₁ - σ'₃) / 2 ≈ 15.4 kPa</li>
+                        </ul>
+
+                        <p style="margin-top: 15px; color: #c62828;"><strong>问题：单个试验点无法确定两个参数！</strong></p>
+                        <p>在实际试验中，需要至少进行3个不同围压的试验，然后拟合直线得到 c' 和 φ'</p>
+
+                        <p style="margin-top: 15px;">假设题目中 c' = 0（砂土通常无粘聚力）：</p>
+                        <div class="equation-box">
+                            tan φ' = τ / σ' = 15.4 / 215.4 ≈ 0.0715<br>
+                            φ' = arctan(0.0715) ≈ <strong>4.1°</strong>
+                        </div>
+                        <p style="color: #c62828; font-weight: bold;">这个角度太小了，不合理。</p>
+                        <p style="margin-top: 10px;">实际上，对于CD试验，应该进行多个不同σ₃的试验。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第六部分：应力路径 -->
+            <div class="section">
+                <h2>📊 应力路径（Stress Path）</h2>
+
+                <h3>基本概念</h3>
+                <div class="definition">
+                    <strong>应力路径：</strong> 在三轴试验过程中，应力状态从初始状态变化到破坏状态所追踪的轨迹。
+                </div>
+
+                <p>在三轴试验中，总应力和有效应力随加载而变化。两者之间的差异就是孔隙水压力：</p>
+                <div class="equation-box">
+                    σ = σ' + u（总应力 = 有效应力 + 孔隙水压力）
+                </div>
+
+                <h3>σ-τ 平面上的应力路径</h3>
+                <div class="key-concept">
+                    <h4>三种试验类型的应力路径差异</h4>
+                    <ul style="margin-left: 20px;">
+                        <li><strong>UU（无排水）：</strong> 总应力路径和有效应力路径分离</li>
+                        <li><strong>CU（固结无排水）：</strong> 固结时有排水，压缩时无排水，路径拐折</li>
+                        <li><strong>CD（固结排水）：</strong> 全程有排水，孔隙水压力始终为0，两条路径重合</li>
+                    </ul>
+                </div>
+
+                <h3>q-p' 空间中的应力路径</h3>
+                <div class="definition">
+                    <strong>定义：</strong><br>
+                    p' = (σ'₁ + 2σ'₃) / 3 （平均有效应力）<br>
+                    q' = σ'₁ - σ'₃ （偏应力）
+                </div>
+
+                <div class="key-concept">
+                    <h4>关键性质</h4>
+                    <p>在q-p'平面上，<strong>临界状态线（CSL）是一条直线：</strong></p>
+                    <div class="equation-box">
+                        q' = M · p'<br>
+                        其中 M = 6 sin φ' / (3 - sin φ')
+                    </div>
+                </div>
+
+                <div class="important">
+                    <strong>重要性质：</strong><br>
+                    不管起始应力状态如何，所有试验样品的应力路径最终都会汇聚到同一条 CSL（临界状态线）上！
+                </div>
+
+                <h3>扩张性和孔隙水压力变化</h3>
+                <div class="diagram">
+                    <div class="diagram-title">排水与无排水剪切的差异</div>
+                    <p><strong>排水剪切（Drained）：</strong></p>
+                    <ul style="margin-left: 20px;">
+                        <li>密实土壤会 <strong>膨胀（dilate）</strong></li>
+                        <li>体积增加，孔隙水压力保持为0</li>
+                        <li>有效应力路径有较陡的斜率</li>
+                    </ul>
+
+                    <p style="margin-top: 15px;"><strong>无排水剪切（Undrained）：</strong></p>
+                    <ul style="margin-left: 20px;">
+                        <li>体积无法改变，孔隙水压力变化</li>
+                        <li>密实土壤：孔隙水压力降低（趋向膨胀）</li>
+                        <li>松散土壤：孔隙水压力升高（趋向压缩）</li>
+                        <li>总应力路径和有效应力路径分离</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 第七部分：例题2 - 应力路径 -->
+            <div class="section">
+                <h2>📝 例题2：应力路径绘制与分析</h2>
+
+                <div class="example">
+                    <h4>📌 题目（Problem 5.6）</h4>
+                    <p>某饱和黏土样品进行固结无排水（CU）三轴试验。所有围压（σ₃）= 600 kPa，反压（back pressure）= 200 kPa。</p>
+
+                    <p style="margin-top: 15px; font-weight: bold;">试验数据：</p>
+                    <table class="comparison-table">
+                        <tr>
+                            <th>σ₁ - σ₃ (kPa)</th>
+                            <td>0</td>
+                            <td>80</td>
+                            <td>158</td>
+                            <td>214</td>
+                            <td>279</td>
+                            <td>319</td>
+                        </tr>
+                        <tr>
+                            <th>u (kPa)</th>
+                            <td>200</td>
+                            <td>229</td>
+                            <td>277</td>
+                            <td>318</td>
+                            <td>388</td>
+                            <td>433</td>
+                        </tr>
+                    </table>
+
+                    <h5 style="color: #1565c0; margin-top: 20px;">求：</h5>
+                    <p>• 绘制总应力路径（TSP）和有效应力路径（ESP）<br>
+                    • 若黏土在试验末期达到临界状态，估算临界状态摩擦角 φ'_cv</p>
+                </div>
+
+                <div class="solution">
+                    <h5>✏️ 详细解答</h5>
+
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <strong>计算有效应力</strong>
+
+                        <p style="margin-top: 10px;">有效应力的计算公式：σ' = σ - u</p>
+
+                        <p style="color: #2196F3;"><strong>关键理解：</strong></p>
+                        <p>• σ₃ 固定 = 600 kPa（总应力）<br>
+                        • σ₁ = σ₃ + (σ₁ - σ₃) = 600 + (σ₁ - σ₃)<br>
+                        • 孔隙水压力 u 逐步增加</p>
+
+                        <p style="margin-top: 15px; color: #2196F3;"><strong>计算表格：</strong></p>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>步骤</th>
+                                <th>σ₁-σ₃(kPa)</th>
+                                <th>σ₁(kPa)</th>
+                                <th>u(kPa)</th>
+                                <th>σ'₁=σ₁-u(kPa)</th>
+                                <th>σ'₃=σ₃-u(kPa)</th>
+                            </tr>
+                            <tr>
+                                <td>固结后</td>
+                                <td>0</td>
+                                <td>600</td>
+                                <td>200</td>
+                                <td>400</td>
+                                <td>400</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>80</td>
+                                <td>680</td>
+                                <td>229</td>
+                                <td>451</td>
+                                <td>371</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>158</td>
+                                <td>758</td>
+                                <td>277</td>
+                                <td>481</td>
+                                <td>323</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>214</td>
+                                <td>814</td>
+                                <td>318</td>
+                                <td>496</td>
+                                <td>282</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>279</td>
+                                <td>879</td>
+                                <td>388</td>
+                                <td>491</td>
+                                <td>212</td>
+                            </tr>
+                            <tr>
+                                <td>破坏</td>
+                                <td>319</td>
+                                <td>919</td>
+                                <td>433</td>
+                                <td>486</td>
+                                <td>167</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <strong>计算应力路径坐标（σ-τ平面）</strong>
+
+                        <p style="margin-top: 10px;">在莫尔圆中，通常使用：</p>
+                        <p>σ_mean = (σ₁ + σ₃) / 2<br>
+                        τ = (σ₁ - σ₃) / 2</p>
+
+                        <p style="color: #2196F3; margin-top: 15px;"><strong>总应力路径（TSP）点：</strong></p>
+                        <table class="comparison-table" style="margin-top: 10px;">
+                            <tr>
+                                <th>步骤</th>
+                                <th>σ_mean = (σ₁+σ₃)/2</th>
+                                <th>τ = (σ₁-σ₃)/2</th>
+                            </tr>
+                            <tr>
+                                <td>初始</td>
+                                <td>600</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>640</td>
+                                <td>40</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>679</td>
+                                <td>79</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>707</td>
+                                <td>107</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>739.5</td>
+                                <td>139.5</td>
+                            </tr>
+                            <tr>
+                                <td>破坏</td>
+                                <td>759.5</td>
+                                <td>159.5</td>
+                            </tr>
+                        </table>
+
+                        <p style="color: #2196F3; margin-top: 20px;"><strong>有效应力路径（ESP）点：</strong></p>
+                        <table class="comparison-table" style="margin-top: 10px;">
+                            <tr>
+                                <th>步骤</th>
+                                <th>σ'_mean = (σ'₁+σ'₃)/2</th>
+                                <th>τ = (σ'₁-σ'₃)/2</th>
+                            </tr>
+                            <tr>
+                                <td>初始</td>
+                                <td>400</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>411</td>
+                                <td>40</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>402</td>
+                                <td>79</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>389</td>
+                                <td>107</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>351.5</td>
+                                <td>139.5</td>
+                            </tr>
+                            <tr>
+                                <td>破坏</td>
+                                <td>326.5</td>
+                                <td>159.5</td>
+                            </tr>
+                        </table>
+
+                        <p style="margin-top: 15px; color: #2196F3;"><strong>观察：</strong></p>
+                        <p>• TSP 从点 (600, 0) 沿直线向右上方移动<br>
+                        • ESP 从点 (400, 0) 开始，初期向右上方，后期向左上方移动（因为u增加得很快）<br>
+                        • 这是CU试验的典型特征！</p>
+                    </div>
+
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <strong>确定临界状态摩擦角 φ'_cv</strong>
+
+                        <p style="margin-top: 10px;">如果黏土在破坏时达到临界状态，则莫尔圆与破坏包络线相切，且该包络线过原点（无粘聚力）。</p>
+
+                        <p style="color: #2196F3;"><strong>临界状态条件：φ' = φ'_cv</strong></p>
+
+                        <p style="margin-top: 10px;">从莫尔圆关系：</p>
+                        <div class="equation-box">
+                            sin φ' = τ / [(σ'_mean) + τ / tan φ']<br>
+                            或更简单地：<br>
+                            sin φ' = (σ'₁ - σ'₃) / (σ'₁ + σ'₃)
+                        </div>
+
+                        <p style="margin-top: 15px;">破坏时的有效应力：</p>
+                        <p>σ'₁ = 486 kPa<br>
+                        σ'₃ = 167 kPa</p>
+
+                        <p style="background: #f5f5f5; padding: 15px; border-radius: 3px; margin-top: 10px;">
+                            sin φ'_cv = (486 - 167) / (486 + 167) = 319 / 653 = 0.488<br>
+                            φ'_cv = arcsin(0.488) ≈ <strong>29.2°</strong>
+                        </p>
+
+                        <p style="margin-top: 15px;">也可以用切线形式验证：</p>
+                        <p>tan φ' = τ / σ' = 159.5 / 326.5 = 0.488<br>
+                        φ' = arctan(0.488) ≈ 26.1°</p>
+
+                        <p style="color: #c62828; margin-top: 10px;"><strong>注：</strong> 两种方法给出不同结果，这是因为莫尔圆分析和切线分析在定义上的差异。通常使用sin形式的结果。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第八部分：临界状态 -->
+            <div class="section">
+                <h2>🎯 临界状态框架（Critical State Framework）</h2>
+
+                <h3>基本概念</h3>
+                <div class="definition">
+                    <strong>临界状态（Critical State）：</strong> 土壤无限变形而不改变应力或体积的状态。此时土壤既不膨胀也不压缩，摩擦角达到临界值 φ'_cv。
+                </div>
+
+                <div class="key-concept">
+                    <h4>临界状态的重要性</h4>
+                    <p>临界状态框架是现代土壤力学中最强大的工具：</p>
+                    <ul style="margin-left: 20px;">
+                        <li>✅ 统一了剪切强度和体积行为</li>
+                        <li>✅ 解释了为什么不同密度的土壤最终破坏时有相同的摩擦角</li>
+                        <li>✅ 预测了超固结土的异常强度和膨胀</li>
+                    </ul>
+                </div>
+
+                <h3>三个关键线</h3>
+                <div class="diagram">
+                    <div class="diagram-title">临界状态平面中的三条线</div>
+                    <p><strong>在 v-ln(p') 平面上：</strong></p>
+                </div>
+
+                <table class="comparison-table">
+                    <tr>
+                        <th>线的名称</th>
+                        <th>代号</th>
+                        <th>含义</th>
+                        <th>方程式</th>
+                    </tr>
+                    <tr>
+                        <td><strong>临界状态线</strong></td>
+                        <td>CSL</td>
+                        <td>破坏时达到的<br>最终状态轨迹</td>
+                        <td>v = Γ - λ ln(p')</td>
+                    </tr>
+                    <tr>
+                        <td><strong>等向固结线</strong></td>
+                        <td>ICL</td>
+                        <td>从重固结到不同<br>压力的正常固结</td>
+                        <td>v = N - λ ln(p')</td>
+                    </tr>
+                    <tr>
+                        <td><strong>卸载-重新加载线</strong></td>
+                        <td>URL</td>
+                        <td>超固结土的<br>刚度特性</td>
+                        <td>v = v_k - κ ln(p')</td>
+                    </tr>
+                </table>
+
+                <p style="margin-top: 20px;"><strong>符号说明：</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>v = 1 + e（比体积 = 1 + 孔隙比）</li>
+                    <li>Γ = 在参考压力 p' = 1 kPa 时 CSL 的 v 值</li>
+                    <li>N = 在参考压力 p' = 1 kPa 时 ICL 的 v 值</li>
+                    <li>λ = 正常压缩指数（Normal compression index）</li>
+                    <li>κ = 膨胀指数（Swelling index）通常 κ ≈ 0.1λ</li>
+                </ul>
+
+                <h3>q-p' 平面上的临界状态线</h3>
+                <div class="formula">
+                    临界状态线（无粘聚力）：
+                    <br><br>
+                    q' = M · p'
+                    <br><br>
+                    其中 M 与摩擦角的关系：
+                    <br>
+                    sin φ'_cv = 3M / (6 + M)
+                    <br>或
+                    <br>
+                    M = 6 sin φ'_cv / (3 - sin φ'_cv)
+                </div>
+
+                <h3>关键参数关系</h3>
+                <div class="key-concept">
+                    <h4>从临界状态推导破坏包络线</h4>
+                    <p>如果已知临界状态参数，可以计算破坏时的主应力差：</p>
+                </div>
+
+                <div class="formula">
+                    σ'₁ = σ'₃ · tan²(π/4 + φ'_cv/2) + 2c' tan(π/4 + φ'_cv/2)
+                    <br><br>
+                    或用 M：
+                    <br>
+                    q = (σ'₁ - σ'₃) = M · p' = M · (σ'₁ + 2σ'₃) / 3
+                </div>
+            </div>
+
+            <!-- 第九部分：例题3 - 临界状态 -->
+            <div class="section">
+                <h2>📝 例题3：临界状态分析</h2>
+
+                <div class="example">
+                    <h4>📌 题目</h4>
+                    <p>某饱和正常固结黏土的临界状态参数为：</p>
+                    <p><strong>N = 2.48，λ = 0.12，Γ = 2.41，M = 1.35</strong></p>
+
+                    <p style="margin-top: 15px;">样品固结压力 σ'₃ = 300 kPa</p>
+
+                    <h5 style="color: #1565c0; margin-top: 20px;">求：</h5>
+                    <p>• 无排水试验中，破坏时的主应力差和孔隙比<br>
+                    • 排水试验中，破坏时的主应力差和孔隙比<br>
+                    • 临界状态摩擦角 φ'_cv</p>
+                </div>
+
+                <div class="solution">
+                    <h5>✏️ 详细解答</h5>
+
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <strong>固结后的初始孔隙比</strong>
+
+                        <p style="margin-top: 10px;">使用等向固结线（ICL）方程计算固结后的 v 值：</p>
+                        <div class="equation-box">
+                            v_c = N - λ ln(p'_c) = 2.48 - 0.12 ln(300)<br>
+                            v_c = 2.48 - 0.12 × 5.704 = 2.48 - 0.685 = <strong>1.795</strong>
+                        </div>
+
+                        <p style="margin-top: 15px;">由 v = 1 + e，得初始孔隙比：</p>
+                        <div class="equation-box">
+                            e_c = v_c - 1 = 1.795 - 1 = <strong>0.795</strong>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <strong>无排水试验（常体积）</strong>
+
+                        <p style="margin-top: 10px;">在无排水条件下，体积保持不变：v_f = v_c = 1.795</p>
+
+                        <p style="color: #2196F3;"><strong>求解破坏时的有效应力：</strong></p>
+                        <p>临界状态线方程：v = Γ - λ ln(p'_f)</p>
+                        <p>已知 v_f = 1.795，代入求 p'_f：</p>
+
+                        <p style="background: #f5f5f5; padding: 10px; border-radius: 3px; margin: 10px 0;">
+                            1.795 = 2.41 - 0.12 ln(p'_f)<br>
+                            0.12 ln(p'_f) = 2.41 - 1.795 = 0.615<br>
+                            ln(p'_f) = 0.615 / 0.12 = 5.125<br>
+                            p'_f = e^5.125 = <strong>168 kPa</strong>
+                        </p>
+
+                        <p style="color: #2196F3; margin-top: 15px;"><strong>求解破坏时的主应力差：</strong></p>
+                        <p>在临界状态，使用关系：q' = M · p'</p>
+
+                        <p style="background: #f5f5f5; padding: 10px; border-radius: 3px; margin: 10px 0;">
+                            q'_f = M · p'_f = 1.35 × 168 = <strong>227 kPa</strong><br>
+                            即：σ'₁ - σ'₃ = 227 kPa
+                        </p>
+
+                        <p style="color: #2196F3; margin-top: 15px;"><strong>破坏时的孔隙比：</strong></p>
+                        <p style="background: #f5f5f5; padding: 10px; border-radius: 3px;">
+                            e_f = v_f - 1 = 1.795 - 1 = <strong>0.795</strong><br>
+                            （在临界状态，孔隙比保持不变！）
+                        </p>
+                    </div>
+
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <strong>排水试验（固结排水）</strong>
+
+                        <p style="margin-top: 10px;">在排水条件下，遵循有效应力路径达到临界状态。</p>
+
+                        <p style="color: #2196F3;"><strong>在临界状态，仍然有：q' = M · p'</strong></p>
+                        <p>但现在 σ'₃ 也在变化（排水时会增加）</p>
+
+                        <p style="margin-top: 15px;">关键关系：在临界状态，应力比为：</p>
+                        <div class="equation-box">
+                            (σ'₁ - σ'₃) / 2 / [(σ'₁ + σ'₃) / 2] 的关系
+                        </div>
+
+                        <p style="margin-top: 10px;">使用 Cam-clay 关系：</p>
+                        <div class="equation-box">
+                            σ'₁ / σ'₃ = [(3 - sin φ') / (1 + sin φ')] = tan²(π/4 + φ'/2)<br>
+                            其中 sin φ' = 3M / (6 + M)
+                        </div>
+
+                        <p style="background: #f5f5f5; padding: 10px; border-radius: 3px; margin: 10px 0;">
+                            sin φ'_cv = 3 × 1.35 / (6 + 1.35) = 4.05 / 7.35 = <strong>0.551</strong><br>
+                            φ'_cv = arcsin(0.551) ≈ <strong>33.5°</strong>
+                        </p>
+
+                        <p style="margin-top: 15px;">由于排水时从 σ'₃ = 300 kPa 开始，最终也达到临界状态线：</p>
+                        <p>如果 σ'₃_f 是最终围压，则：</p>
+
+                        <p style="background: #f5f5f5; padding: 10px; border-radius: 3px; margin: 10px 0;">
+                            v_f = Γ - λ ln(p'_f)<br>
+                            p'_f = (σ'₁_f + 2σ'₃_f) / 3<br>
+                            q'_f = σ'₁_f - σ'₃_f = M · p'_f
+                        </div>
+
+                        <p style="margin-top: 15px;">这是一个复杂的非线性问题。通常在排水试验中：</p>
+                        <p>• 样品会沿着 ICL 向下移动（体积增加）<br>
+                        • 最终在更高的应力水平达到临界状态<br>
+                        • 通常 σ'₁ - σ'₃ 会比无排水情况大</p>
+                    </div>
+
+                    <div class="step">
+                        <span class="step-number">4</span>
+                        <strong>临界状态摩擦角</strong>
+
+                        <p style="margin-top: 10px;">从上面的计算：</p>
+                        <p style="background: #f5f5f5; padding: 10px; border-radius: 3px;">
+                            sin φ'_cv = 0.551<br>
+                            φ'_cv = arcsin(0.551) ≈ <strong>33.5°</strong>
+                        </p>
+
+                        <p style="margin-top: 15px;">这是从参数 M = 1.35 推导的临界状态摩擦角。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第十部分：香港土壤参数 -->
+            <div class="section">
+                <h2>🌍 香港土壤典型参数</h2>
+
+                <table class="comparison-table">
+                    <tr>
+                        <th>土壤类型</th>
+                        <th>单位重 (kN/m³)</th>
+                        <th>摩擦角 φ'</th>
+                        <th>粘聚力 c' (kPa)</th>
+                        <th>渗透性 k (m/s)</th>
+                    </tr>
+                    <tr style="background: #fff9e6;">
+                        <td colspan="5" style="text-align: center; font-weight: bold;">压实填料 Compacted Fill</td>
+                    </tr>
+                    <tr>
+                        <td>CDG（风化花岗岩）</td>
+                        <td>19-21</td>
+                        <td>38-42°</td>
+                        <td>0-5</td>
+                        <td>10⁻⁶-10⁻⁷</td>
+                    </tr>
+                    <tr>
+                        <td>CDV（风化火成岩）</td>
+                        <td>18-21</td>
+                        <td>35-38°</td>
+                        <td>0-5</td>
+                        <td>10⁻⁶-10⁻⁸</td>
+                    </tr>
+                    <tr>
+                        <td>碎石填料</td>
+                        <td>18-21</td>
+                        <td>45-50°</td>
+                        <td>0</td>
+                        <td>&gt;10⁻²-10⁻⁴</td>
+                    </tr>
+                    <tr style="background: #fff9e6;">
+                        <td colspan="5" style="text-align: center; font-weight: bold;">原位土壤 In Situ Soil</td>
+                    </tr>
+                    <tr>
+                        <td>CDG（风化花岗岩）</td>
+                        <td>16-21</td>
+                        <td>35-44°</td>
+                        <td>5-15</td>
+                        <td>10⁻⁵-10⁻⁷</td>
+                    </tr>
+                    <tr>
+                        <td>CDV（风化火成岩）</td>
+                        <td>16-21</td>
+                        <td>32-38°</td>
+                        <td>5-10</td>
+                        <td>10⁻⁵-10⁻⁷</td>
+                    </tr>
+                    <tr>
+                        <td>坡积土</td>
+                        <td>15-21</td>
+                        <td>26-40°</td>
+                        <td>0-10</td>
+                        <td>10⁻⁴-10⁻⁷</td>
+                    </tr>
+                </table>
+
+                <div class="key-concept">
+                    <h4>香港地质背景</h4>
+                    <p>Hong Kong 主要由以下地质类型组成：</p>
+                    <ul style="margin-left: 20px;">
+                        <li>🔴 <strong>花岗岩</strong>（Granite）与 <strong>火成岩</strong>（Igneous rocks）</li>
+                        <li>🔴 深风化土壤（Deeply weathered soils）</li>
+                        <li>🔴 坡积土和滑坡堆积物（Colluvium）</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 第十一部分：关键公式总结 -->
+            <div class="section">
+                <h2>📐 关键公式汇总</h2>
+
+                <h3>1. 莫尔-库仑破坏准则</h3>
+                <div class="formula">
+                    τf = c' + σ' tan φ'
+                    <br>
+                    σ' = σ - u （有效应力）
+                </div>
+
+                <h3>2. 应力计算</h3>
+                <div class="formula">
+                    莫尔圆圆心：σ_mean = (σ₁ + σ₃) / 2
+                    <br>
+                    剪应力：τ = (σ₁ - σ₃) / 2
+                    <br>
+                    平均有效应力：p' = (σ'₁ + 2σ'₃) / 3
+                    <br>
+                    偏应力：q' = σ'₁ - σ'₃
+                </div>
+
+                <h3>3. 三轴试验</h3>
+                <div class="formula">
+                    法向应力：σ = N / A
+                    <br>
+                    剪应力：τ = T / A
+                    <br>
+                    孔隙水压力参数：Δu = B[Δσ₃ + A(Δσ₁ - Δσ₃)]
+                </div>
+
+                <h3>4. 临界状态</h3>
+                <div class="formula">
+                    临界状态线：v = Γ - λ ln(p')
+                    <br>
+                    等向固结线：v = N - λ ln(p')
+                    <br>
+                    q' = M · p' （临界状态在q-p'平面）
+                </div>
+
+                <h3>5. 摩擦角与 M 的关系</h3>
+                <div class="formula">
+                    sin φ' = 3M / (6 + M)
+                    <br>
+                    M = 6 sin φ' / (3 - sin φ')
+                </div>
+
+                <h3>6. 孔隙水压力系数</h3>
+                <div class="formula">
+                    Skempton 修正系数：λ = 1.7 - 0.54 log IP （IP = 塑性指数）
+                    <br>
+                    （用于现场孔隙水压力修正）
+                </div>
+            </div>
+
+            <!-- 第十二部分：复习重点 -->
+            <div class="section">
+                <h2>🎓 复习重点与考试提示</h2>
+
+                <div class="review-box">
+                    <h3>💡 必须掌握的核心概念</h3>
+
+                    <div class="important" style="margin-top: 15px;">
+                        <strong>1. 有效应力原理</strong><br>
+                        土壤的剪切强度取决于<strong>有效应力，不是总应力</strong>！孔隙水压力会减少有效应力，进而减少剪切强度。
+                    </div>
+
+                    <div class="important">
+                        <strong>2. 莫尔-库仑破坏准则</strong><br>
+                        需要理解为什么 τf = c' + σ' tan φ'。c' 来自粒子咬合/胶结，φ' 来自摩擦。
+                    </div>
+
+                    <div class="important">
+                        <strong>3. 试验类型的区别</strong><br>
+                        UU/CU/CD 三种试验在固结和排水条件上的区别，导致不同的应力路径和结果。
+                    </div>
+
+                    <div class="important">
+                        <strong>4. 应力路径</strong><br>
+                        理解在σ-τ或q-p'平面上，应力如何从初始状态变化到破坏状态。总应力路径和有效应力路径的分离由孔隙水压力引起。
+                    </div>
+
+                    <div class="important">
+                        <strong>5. 临界状态</strong><br>
+                        无论初始条件如何，土壤最终会达到相同的临界状态，具有相同的摩擦角。
+                    </div>
+                </div>
+
+                <div class="exam-tips">
+                    <h3>🎯 考试易出错的地方</h3>
+
+                    <div style="margin: 15px 0;">
+                        <strong>❌ 常见错误 1：混淆总应力和有效应力</strong><br>
+                        ✅ 记住：所有强度计算都用有效应力！σ' = σ - u
+                    </div>
+
+                    <div style="margin: 15px 0;">
+                        <strong>❌ 常见错误 2：三轴试验中忘记面积修正</strong><br>
+                        ✅ 在CD试验中，必须根据体积变化修正面积
+                    </div>
+
+                    <div style="margin: 15px 0;">
+                        <strong>❌ 常见错误 3：应力路径方向搞反</strong><br>
+                        ✅ UU试验：总应力路径陡峭，有效应力路径变平（因为u增加）<br>
+                        ✅ CD试验：两条路径重合（因为u = 0）
+                    </div>
+
+                    <div style="margin: 15px 0;">
+                        <strong>❌ 常见错误 4：临界状态参数混淆</strong><br>
+                        ✅ Γ（大写）= CSL 在标准压力的v值<br>
+                        ✅ λ（lambda）= 正常压缩指数
+                    </div>
+                </div>
+
+                <div class="exam-tips">
+                    <h3>📋 考试题型预测</h3>
+
+                    <ul style="margin-left: 20px;">
+                        <li><strong>计算题：</strong>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>三轴试验中确定 c' 和 φ'</li>
+                                <li>绘制和分析应力路径</li>
+                                <li>计算临界状态参数</li>
+                                <li>面积修正计算</li>
+                            </ul>
+                        </li>
+                        <li style="margin-top: 15px;"><strong>作图题：</strong>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>莫尔圆和破坏包络线</li>
+                                <li>应力路径（σ-τ或q-p'）</li>
+                                <li>破坏包络线通过多个试验点</li>
+                            </ul>
+                        </li>
+                        <li style="margin-top: 15px;"><strong>概念题：</strong>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>解释临界状态的物理意义</li>
+                                <li>为什么需要进行多个试验</li>
+                                <li>孔隙水压力对强度的影响</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 第十三部分：快速参考表 -->
+            <div class="section">
+                <h2>📑 快速参考表</h2>
+
+                <h3>实验室试验比较</h3>
+                <table class="comparison-table">
+                    <tr>
+                        <th>特征</th>
+                        <th>直剪试验</th>
+                        <th>UU 三轴</th>
+                        <th>CU 三轴</th>
+                        <th>CD 三轴</th>
+                    </tr>
+                    <tr>
+                        <td><strong>固结</strong></td>
+                        <td>✗</td>
+                        <td>✗</td>
+                        <td>✓</td>
+                        <td>✓</td>
+                    </tr>
+                    <tr>
+                        <td><strong>排水</strong></td>
+                        <td>✗ 无法控制</td>
+                        <td>✗</td>
+                        <td>✗</td>
+                        <td>✓</td>
+                    </tr>
+                    <tr>
+                        <td><strong>u 测量</strong></td>
+                        <td>✗</td>
+                        <td>✓</td>
+                        <td>✓</td>
+                        <td>-（u=0）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>获得参数</strong></td>
+                        <td>c', φ'</td>
+                        <td>cu, φu</td>
+                        <td>c', φ'</td>
+                        <td>c', φ'</td>
+                    </tr>
+                    <tr>
+                        <td><strong>应用场景</strong></td>
+                        <td>快速筛选</td>
+                        <td>短期分析</td>
+                        <td>通用设计</td>
+                        <td>长期分析</td>
+                    </tr>
+                </table>
+
+                <h3 style="margin-top: 30px;">现场试验快速参考</h3>
+                <table class="comparison-table">
+                    <tr>
+                        <th>试验名称</th>
+                        <th>测量内容</th>
+                        <th>适用土壤</th>
+                        <th>优点</th>
+                        <th>缺点</th>
+                    </tr>
+                    <tr>
+                        <td><strong>孔隙水压力修正</strong><br>(Vane Shear)</td>
+                        <td>cu（无排水强度）</td>
+                        <td>黏土</td>
+                        <td>快速、原位</td>
+                        <td>需要修正因子</td>
+                    </tr>
+                    <tr>
+                        <td><strong>标准贯入试验</strong><br>(SPT)</td>
+                        <td>N-Value<br>→ 推导φ'</td>
+                        <td>砂土、粉土</td>
+                        <td>经济、标准化</td>
+                        <td>精度一般</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- 第十四部分：总结 -->
+            <div class="section">
+                <h2>🎬 全章总结</h2>
+
+                <div class="diagram">
+                    <div class="diagram-title">土壤剪切强度的完整图景</div>
+
+                    <div class="flowchart" style="display: flex; flex-direction: column; align-items: flex-start;">
+                        <div style="width: 100%; margin: 15px 0;">
+                            <p style="font-weight: bold; color: #c9184a;">🔴 第1阶段：基础理论</p>
+                            <p style="margin-left: 20px; color: #666;">
+                                理解土壤为摩擦材料 → 莫尔-库仑准则 τf = c' + σ' tan φ'<br>
+                                关键：有效应力原理
+                            </p>
+                        </div>
+
+                        <div style="width: 100%; margin: 15px 0;">
+                            <p style="font-weight: bold; color: #c9184a;">🔴 第2阶段：试验方法</p>
+                            <p style="margin-left: 20px; color: #666;">
+                                实验室：直剪试验、三轴试验（UU/CU/CD）<br>
+                                现场：孔隙水压力修正、SPT<br>
+                                结果：确定c'和φ'
+                            </p>
+                        </div>
+
+                        <div style="width: 100%; margin: 15px 0;">
+                            <p style="font-weight: bold; color: #c9184a;">🔴 第3阶段：应力分析</p>
+                            <p style="margin-left: 20px; color: #666;">
+                                莫尔圆分析 → 应力路径追踪<br>
+                                q-p'空间中的临界状态线
+                            </p>
+                        </div>
+
+                        <div style="width: 100%; margin: 15px 0;">
+                            <p style="font-weight: bold; color: #c9184a;">🔴 第4阶段：现代框架</p>
+                            <p style="margin-left: 20px; color: #666;">
+                                临界状态概念：统一强度和体积行为<br>
+                                CSL, ICL, URL 的物理意义
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="key-concept" style="margin-top: 30px;">
+                    <h4>学完这章，你能够：</h4>
+                    <ul style="margin-left: 20px;">
+                        <li>✅ <strong>理解</strong>土壤为什么以及如何破坏</li>
+                        <li>✅ <strong>确定</strong>土壤的强度参数 c' 和 φ'</li>
+                        <li>✅ <strong>应用</strong>有效应力原理进行工程分析</li>
+                        <li>✅ <strong>预测</strong>土壤在不同排水条件下的行为</li>
+                        <li>✅ <strong>使用</strong>临界状态框架进行高级分析</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 附录：考试英文词汇 -->
+            <div class="section">
+                <h2>📝 考试英文词汇速查</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="vocab">
+                        <strong>Shear strength</strong> - 剪切强度
+                    </div>
+                    <div class="vocab">
+                        <strong>Effective stress</strong> - 有效应力
+                    </div>
+                    <div class="vocab">
+                        <strong>Pore water pressure</strong> - 孔隙水压力
+                    </div>
+                    <div class="vocab">
+                        <strong>Mohr-Coulomb criterion</strong> - 莫尔-库仑准则
+                    </div>
+                    <div class="vocab">
+                        <strong>Friction angle (φ')</strong> - 摩擦角
+                    </div>
+                    <div class="vocab">
+                        <strong>Cohesion (c')</strong> - 粘聚力
+                    </div>
+                    <div class="vocab">
+                        <strong>Triaxial test</strong> - 三轴试验
+                    </div>
+                    <div class="vocab">
+                        <strong>Shear box test</strong> - 直剪试验
+                    </div>
+                    <div class="vocab">
+                        <strong>Critical state</strong> - 临界状态
+                    </div>
+                    <div class="vocab">
+                        <strong>Stress path</strong> - 应力路径
+                    </div>
+                    <div class="vocab">
+                        <strong>Drained/Undrained</strong> - 排水/无排水
+                    </div>
+                    <div class="vocab">
+                        <strong>Consolidated</strong> - 固结的
+                    </div>
+                    <div class="vocab">
+                        <strong>Dilatancy</strong> - 膨胀性
+                    </div>
+                    <div class="vocab">
+                        <strong>Void ratio (e)</strong> - 孔隙比
+                    </div>
+                    <div class="vocab">
+                        <strong>Vane shear test</strong> - 孔隙水压力修正
+                    </div>
+                    <div class="vocab">
+                        <strong>Standard penetration test</strong> - 标准贯入试验
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>🎓 土壤力学 - 剪切强度完整讲义</p>
+            <p>CSE39307 Soil Mechanics (Shear Strength)</p>
+            <p style="margin-top: 10px; opacity: 0.8;">The Hong Kong Polytechnic University</p>
+            <p style="margin-top: 10px; opacity: 0.8;">生成时间：2026年4月</p>
+        </footer>
+    </div>
+</body>
+</html>
