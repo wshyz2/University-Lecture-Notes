@@ -1,0 +1,216 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\title{Assignment 3 Solutions}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Question 1}
+
+Let the village locations be
+\[
+[2,5,12,18,20].
+\]
+
+For a station at coordinate \(X\), the asymmetric installation cost is
+\[
+\mathrm{Cost}(X)=\sum_{x_i<X} 3(X-x_i) + \sum_{x_i>X} (x_i-X).
+\]
+
+\subsection*{(a) Fill in the table}
+
+\begin{center}
+\begin{tabular}{@{}cccc@{}}
+\toprule
+Station position \(X\) & Cost from the left & Cost from the right & Total cost \\
+\midrule
+2  & 0   & 47 & 47 \\
+5  & 9   & 35 & 44 \\
+12 & 51  & 14 & 65 \\
+18 & 105 & 2  & 107 \\
+20 & 129 & 0  & 129 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Therefore, the optimal location is
+\[
+X=5
+\]
+with minimum total cost
+\[
+44.
+\]
+So, in short, \(X=5\) is the best choice here.
+
+\subsection*{(b) Mathematical proof of the optimal position}
+
+Assume the village coordinates are sorted:
+\[
+x_1 \le x_2 \le \cdots \le x_N.
+\]
+
+Since the station must be built at one of the village coordinates, compare two consecutive candidate positions \(x_k\) and \(x_{k+1}\). Let
+\[
+d=x_{k+1}-x_k.
+\]
+
+When we move the station from \(x_k\) to \(x_{k+1}\):
+\begin{itemize}
+    \item Each of the \(k\) villages at or to the left of \(x_k\) becomes \(d\) farther away on the west side, so the total increase is \(3kd\).
+    \item Each of the \(N-k\) villages to the right becomes \(d\) closer on the east side, so the total decrease is \((N-k)d\).
+\end{itemize}
+
+Hence,
+\[
+\mathrm{Cost}(x_{k+1})-\mathrm{Cost}(x_k)=3kd-(N-k)d=(4k-N)d.
+\]
+
+Now:
+\begin{itemize}
+    \item If \(4k<N\), then \((4k-N)d<0\), so moving right decreases the cost.
+    \item If \(4k>N\), then \((4k-N)d>0\), so moving right increases the cost.
+    \item The minimum occurs when \(k\) first reaches \(N/4\).
+\end{itemize}
+
+Therefore, for the \(3{:}1\) asymmetric ratio, the optimal station must be the first village whose rank is at least
+\[
+\left\lceil \frac{N}{4} \right\rceil.
+\]
+
+This is basically the weighted median for this asymmetric cost model.
+
+For \(N=5\),
+\[
+\left\lceil \frac{5}{4} \right\rceil = 2,
+\]
+so the optimal village is the second village in sorted order, namely
+\[
+x_2=5.
+\]
+
+\subsection*{(c) Function \texttt{calculate\_asymmetric\_cost}}
+
+Implemented in \href{run:assignment3_solution.py}{assignment3\_solution.py}.
+
+\subsection*{(d) Function \texttt{solve\_greedy}}
+
+Implemented in \href{run:assignment3_solution.py}{assignment3\_solution.py}.
+
+For the sample input
+\begin{verbatim}
+villages = [2, 5, 12, 18, 20]
+\end{verbatim}
+the function returns
+\begin{verbatim}
+(5, 44)
+\end{verbatim}
+
+\section*{Question 2}
+
+\subsection*{(a) DP state}
+
+Define
+\[
+DP[i][j]
+\]
+to be the minimum total cost to serve the first \(i\) villages using exactly \(j\) stations.
+You can think of this as the ``best answer so far'' after covering the first \(i\) villages with \(j\) stations.
+
+\subsection*{(b) Definition of \(\mathrm{cost}(p,i)\)}
+
+\(\mathrm{cost}(p,i)\) is the minimum cost of serving the contiguous block of villages
+\[
+x_p, x_{p+1}, \dots, x_i
+\]
+with exactly one station placed at the best village location in that block.
+
+Formally,
+\[
+\mathrm{cost}(p,i)
+=
+\min_{X \in \{x_p,\dots,x_i\}}
+\left(
+\sum_{x_t<X} 3(X-x_t) + \sum_{x_t>X} (x_t-X)
+\right).
+\]
+
+\subsection*{(c) Recurrence and base case}
+
+The recurrence is
+\[
+DP[i][j] = \min_{1 \le p \le i} \left( DP[p-1][j-1] + \mathrm{cost}(p,i) \right).
+\]
+
+Base cases:
+\[
+DP[0][0]=0,
+\]
+\[
+DP[i][0]=\infty \quad \text{for } i>0,
+\]
+\[
+DP[0][j]=0 \quad \text{for } j\ge 1.
+\]
+
+\subsection*{(d) Example: villages \([1,2,5,6]\), \(K=2\)}
+
+First compute the one-station block costs. This part is pretty mechanical:
+\[
+\mathrm{cost}(1,1)=0,\quad
+\mathrm{cost}(1,2)=1,\quad
+\mathrm{cost}(1,3)=5,\quad
+\mathrm{cost}(1,4)=10,
+\]
+\[
+\mathrm{cost}(2,2)=0,\quad
+\mathrm{cost}(2,3)=3,\quad
+\mathrm{cost}(2,4)=7,
+\]
+\[
+\mathrm{cost}(3,3)=0,\quad
+\mathrm{cost}(3,4)=1,\quad
+\mathrm{cost}(4,4)=0.
+\]
+
+So the DP table is:
+
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+Stations \(j\) / Villages \(i\) & 1 & 2 & 3 & 4 \\
+\midrule
+1 station  & 0 & 1 & 5 & 10 \\
+2 stations & 0 & 0 & 1 & 2 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Explanation of the second row:
+\begin{itemize}
+    \item For \(i=1\), the cost is \(0\) because one station serves village \([1]\), and the second station is unused.
+    \item For \(i=2\), the cost is \(0\) by splitting into \([1]\) and \([2]\).
+    \item For \(i=3\), the cost is \(1\) by splitting into \([1,2]\) and \([5]\), giving \(1+0=1\).
+    \item For \(i=4\), the cost is \(2\) by splitting into \([1,2]\) and \([5,6]\), giving \(1+1=2\).
+\end{itemize}
+
+Therefore, the optimal solution is:
+\begin{itemize}
+    \item Place one station at \(1\) for villages \([1,2]\).
+    \item Place one station at \(5\) for villages \([5,6]\).
+    \item Minimum total cost \(=2\).
+\end{itemize}
+So the final answer here is quite neat: split the villages into two small nearby groups.
+
+\section*{Code Note}
+
+The Python file also includes a helper function \texttt{solve\_dp(villages, k)} that reconstructs the optimal village blocks for the multi-station case.
+
+\end{document}
